@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light">
+<style>html{color-scheme:light only}</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>유노를 위한 40일 프로젝트</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap');
+
+  :root{
+    --ink:#20303a;
+    --paper:#fbf7ee;
+    --card:#ffffff;
+    --line:#e3dccb;
+    --sky:#3a8fb7;
+    --sky-deep:#2b6d8f;
+    --leaf:#4a9d6e;
+    --leaf-deep:#3a7d57;
+    --coral:#e07a5f;
+    --coral-deep:#c85f45;
+    --gold:#e8b23a;
+    --dim:#8a9199;
+    --shadow: 0 6px 0 rgba(32,48,58,.08), 0 14px 30px rgba(32,48,58,.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%}
+  body{
+    font-family:'Gowun Dodum',system-ui,sans-serif;
+    background:
+      radial-gradient(120% 90% at 50% -10%, #fff8e9 0%, var(--paper) 55%);
+    color:var(--ink);
+    min-height:100%;
+    display:flex;justify-content:center;
+  }
+  .wrap{
+    width:100%;max-width:520px;min-height:100dvh;
+    padding:18px 18px 30px;
+    display:flex;flex-direction:column;
+  }
+  .brand{font-family:'Jua',sans-serif;letter-spacing:.5px}
+
+  /* ---------- top bar ---------- */
+  .top{
+    display:flex;align-items:center;gap:10px;margin-bottom:14px;
+  }
+  .top h1{font-family:'Jua',sans-serif;font-size:20px;font-weight:400;flex:1}
+  .top .stat{
+    font-size:12px;color:var(--dim);text-align:right;line-height:1.4
+  }
+  .top .stat b{color:var(--sky-deep);font-family:'Jua',sans-serif;font-size:14px}
+
+  /* ---------- panels ---------- */
+  .panel{
+    background:var(--card);border:2px solid var(--line);border-radius:22px;
+    box-shadow:var(--shadow);padding:20px;
+  }
+
+  /* ---------- home / chapter select ---------- */
+  #home .hero{
+    text-align:center;padding:26px 16px 22px;margin-bottom:16px;
+    background:linear-gradient(160deg,#eaf6fb, #f6efe0);
+    border:2px solid var(--line);border-radius:26px;box-shadow:var(--shadow);
+  }
+  #home .hero .big{font-family:'Jua',sans-serif;font-size:30px;line-height:1.25}
+  #home .hero .sub{color:var(--dim);margin-top:8px;font-size:14px}
+  #home .hero .eyebrow{
+    font-family:'Jua',sans-serif;font-size:13px;color:var(--sky-deep);
+    letter-spacing:1px;margin-bottom:8px
+  }
+  #home .hero .hero-track{
+    height:10px;border-radius:8px;background:#e2ddcf;margin:18px auto 6px;max-width:280px;overflow:hidden
+  }
+  #home .hero .hero-track i{display:block;height:100%;width:0;
+    background:linear-gradient(90deg,var(--leaf),var(--gold),var(--coral));transition:.5s}
+  #home .hero .hero-count{font-family:'Jua',sans-serif;font-size:12px;color:var(--dim)}
+  .seg{
+    display:flex;background:#eef3f2;border-radius:14px;padding:5px;gap:5px;margin-bottom:16px
+  }
+  .seg button{
+    flex:1;border:0;background:transparent;padding:10px 6px;border-radius:10px;
+    font-family:'Jua',sans-serif;font-size:14px;color:var(--dim);cursor:pointer;transition:.15s
+  }
+  .seg button.on{background:var(--card);color:var(--ink);box-shadow:0 2px 6px rgba(0,0,0,.08)}
+
+  .section-title{font-family:'Jua',sans-serif;font-size:15px;margin:4px 4px 12px;color:var(--sky-deep)}
+
+  .review-top{
+    background:linear-gradient(160deg,#fff1ec,#ffe5db);
+    border:2px solid #f3c4b4;border-radius:22px;padding:18px 18px 16px;margin-bottom:16px;
+    box-shadow:0 6px 0 rgba(200,95,69,.10), 0 14px 26px rgba(200,95,69,.14)
+  }
+  .review-top-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+  .rt-title{font-family:'Jua',sans-serif;font-size:17px;color:var(--coral-deep)}
+  .rt-count{font-family:'Jua',sans-serif;font-size:14px;color:#fff;background:var(--coral);
+    border-radius:20px;padding:3px 12px}
+  .rt-desc{font-size:12px;color:#a86a58;margin-bottom:12px}
+  .primary.coral{background:linear-gradient(160deg,var(--coral),var(--coral-deep));
+    box-shadow:0 5px 0 var(--coral-deep),0 10px 20px rgba(200,95,69,.3);margin-top:0}
+  .primary.coral:active{transform:translateY(4px);box-shadow:0 1px 0 var(--coral-deep)}
+
+  .chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:10px}
+  .chip{
+    position:relative;border:2px solid var(--line);background:var(--card);border-radius:16px;
+    padding:12px 8px 11px;cursor:pointer;transition:.15s;text-align:left;overflow:hidden
+  }
+  .chip:active{transform:translateY(2px)}
+  .chip .d{font-family:'Jua',sans-serif;font-size:16px}
+  .chip .t{font-size:11px;color:var(--dim);margin-top:2px;height:26px;overflow:hidden;line-height:1.25}
+  .chip .bar{height:6px;border-radius:4px;background:#eceadf;margin-top:9px;overflow:hidden}
+  .chip .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--leaf),var(--leaf-deep));width:0}
+  .chip.done{border-color:var(--leaf)}
+  .chip .badge{position:absolute;top:8px;right:8px;font-size:14px;opacity:0;transition:.2s}
+  .chip.done .badge{opacity:1}
+
+  .primary{
+    display:block;width:100%;border:0;border-radius:18px;padding:16px;margin-top:16px;
+    font-family:'Jua',sans-serif;font-size:17px;color:#fff;cursor:pointer;
+    background:linear-gradient(160deg,var(--sky),var(--sky-deep));
+    box-shadow:0 5px 0 var(--sky-deep), 0 10px 20px rgba(43,109,143,.3);transition:.12s
+  }
+  .primary:active{transform:translateY(4px);box-shadow:0 1px 0 var(--sky-deep)}
+  .primary.leaf{background:linear-gradient(160deg,var(--leaf),var(--leaf-deep));box-shadow:0 5px 0 var(--leaf-deep),0 10px 20px rgba(58,125,87,.3)}
+  .primary[disabled]{opacity:.4;box-shadow:none;transform:none;cursor:not-allowed}
+
+  .row-btns{display:flex;gap:10px;margin-top:14px}
+  .ghost{
+    flex:1;border:2px solid var(--line);background:var(--card);border-radius:16px;padding:13px;
+    font-family:'Jua',sans-serif;font-size:14px;color:var(--ink);cursor:pointer
+  }
+  .ghost:active{transform:translateY(2px)}
+
+  .mode-note{font-size:12px;color:var(--dim);text-align:center;margin-top:12px;line-height:1.5}
+
+  /* ---------- quiz ---------- */
+  #quiz{display:none;flex-direction:column;flex:1}
+  .qtop{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .iconbtn{
+    border:2px solid var(--line);background:var(--card);border-radius:12px;width:42px;height:42px;
+    font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex:0 0 auto
+  }
+  .iconbtn:active{transform:translateY(2px)}
+  .progress{flex:1;height:12px;background:#eceadf;border-radius:8px;overflow:hidden}
+  .progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--coral));transition:.3s}
+  .qcount{font-family:'Jua',sans-serif;font-size:13px;color:var(--dim);flex:0 0 auto}
+
+  .card-q{
+    flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;
+    background:var(--card);border:2px solid var(--line);border-radius:26px;box-shadow:var(--shadow);
+    padding:34px 22px;text-align:center;margin-bottom:16px;min-height:180px;position:relative
+  }
+  .card-q .tag{position:absolute;top:16px;left:18px;font-size:11px;color:var(--dim);font-family:'Jua',sans-serif}
+  .card-q .streak{position:absolute;top:14px;right:16px;font-size:13px;color:var(--coral);font-family:'Jua',sans-serif}
+  .prompt-label{font-size:12px;color:var(--dim);margin-bottom:10px;letter-spacing:1px}
+  .prompt-hint{font-size:14px;color:var(--sky-deep);margin-top:12px;line-height:1.5;
+    background:#eef6fa;border-radius:12px;padding:8px 14px;max-width:340px;word-break:keep-all}
+  .prompt-hint:empty{display:none}
+  .prompt{font-family:'Jua',sans-serif;font-size:34px;line-height:1.3;word-break:keep-all}
+  .prompt.small{font-size:26px}
+  .speak{margin-top:14px;border:2px solid var(--line);background:#f4f9fb;border-radius:12px;
+    padding:8px 16px;font-size:13px;color:var(--sky-deep);cursor:pointer;font-family:'Gowun Dodum'}
+
+  .options{display:grid;gap:10px}
+  .opt{
+    border:2px solid var(--line);background:var(--card);border-radius:16px;padding:15px 16px;
+    font-family:'Gowun Dodum';font-size:16px;text-align:left;cursor:pointer;transition:.12s;
+    display:flex;align-items:center;gap:10px
+  }
+  .opt .num{
+    width:26px;height:26px;flex:0 0 auto;border-radius:8px;background:#eef3f2;color:var(--dim);
+    display:flex;align-items:center;justify-content:center;font-family:'Jua',sans-serif;font-size:13px
+  }
+  .opt:active{transform:translateY(2px)}
+  .opt.correct{border-color:var(--leaf);background:#eaf7ef}
+  .opt.correct .num{background:var(--leaf);color:#fff}
+  .opt.wrong{border-color:var(--coral);background:#fceee9}
+  .opt.wrong .num{background:var(--coral);color:#fff}
+  .opt.disabled{pointer-events:none;opacity:.55}
+  .opt.disabled.correct,.opt.disabled.wrong{opacity:1}
+
+  /* typing mode */
+  .type-wrap{display:grid;gap:12px}
+  .type-wrap input{
+    border:2px solid var(--line);background:var(--card);border-radius:16px;padding:16px;
+    font-size:20px;font-family:'Gowun Dodum';text-align:center;color:var(--ink);width:100%
+  }
+  .type-wrap input:focus{outline:none;border-color:var(--sky)}
+  .type-wrap input.correct{border-color:var(--leaf);background:#eaf7ef}
+  .type-wrap input.wrong{border-color:var(--coral);background:#fceee9}
+  .answerline{text-align:center;font-family:'Jua',sans-serif;font-size:18px;min-height:24px}
+  .answerline .a{color:var(--leaf-deep)}
+
+  .feedback{
+    text-align:center;font-family:'Jua',sans-serif;font-size:16px;min-height:26px;margin-top:14px;
+  }
+  .feedback.good{color:var(--leaf-deep)}
+  .feedback.bad{color:var(--coral-deep)}
+
+  .nextbtn{
+    display:none;width:100%;border:0;border-radius:16px;padding:15px;margin-top:12px;
+    font-family:'Jua',sans-serif;font-size:16px;color:#fff;cursor:pointer;
+    background:linear-gradient(160deg,var(--leaf),var(--leaf-deep));
+    box-shadow:0 4px 0 var(--leaf-deep)
+  }
+  .nextbtn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--leaf-deep)}
+
+  /* ---------- result ---------- */
+  #result{display:none;text-align:center}
+  #result .medal{font-size:64px;margin:10px 0}
+  #result h2{font-family:'Jua',sans-serif;font-size:26px;margin-bottom:6px}
+  #result .line{color:var(--dim);margin-bottom:18px}
+  .scorebox{display:flex;gap:12px;margin:18px 0}
+  .scorebox .b{
+    flex:1;background:var(--card);border:2px solid var(--line);border-radius:18px;padding:16px 8px
+  }
+  .scorebox .b .n{font-family:'Jua',sans-serif;font-size:26px}
+  .scorebox .b .k{font-size:12px;color:var(--dim);margin-top:2px}
+  .scorebox .b.g .n{color:var(--leaf-deep)}
+  .scorebox .b.r .n{color:var(--coral-deep)}
+  .wronglist{text-align:left;margin:6px 0 4px}
+  .wronglist .wtitle{font-family:'Jua',sans-serif;font-size:14px;color:var(--coral-deep);margin-bottom:10px}
+  .wrow{
+    display:flex;justify-content:space-between;gap:10px;padding:11px 14px;border:2px solid var(--line);
+    border-radius:14px;margin-bottom:8px;background:var(--card)
+  }
+  .wrow .e{font-family:'Jua',sans-serif}
+  .wrow .k{color:var(--dim);font-size:14px;text-align:right}
+
+  .mini-row{display:flex;gap:8px;margin-top:18px;justify-content:center;flex-wrap:wrap}
+  .mini{
+    border:2px solid var(--line);background:var(--card);border-radius:12px;padding:9px 14px;
+    font-family:'Gowun Dodum';font-size:12px;color:var(--dim);cursor:pointer
+  }
+  .mini:active{transform:translateY(2px)}
+  .mini.danger{color:var(--coral-deep)}
+
+  .hidden{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ================= HOME ================= -->
+  <section id="home">
+    <div class="hero">
+      <div class="eyebrow">유노를 위한 40일 프로젝트</div>
+      <div class="big">유노야, 이건 너만을 위한 거야 💪</div>
+      <div class="sub">40일 뒤엔 웃으면서<br>"쉬운 단어였네!" 할 수 있을 거야<br>화이팅!! 사랑한다 ❤️</div>
+      <div class="hero-track"><i id="heroFill"></i></div>
+      <div class="hero-count" id="heroCount"></div>
+    </div>
+
+    <!-- 틀린 단어 집중 학습 (최상단 강조) -->
+    <div class="review-top hidden" id="reviewTop">
+      <div class="review-top-head">
+        <span class="rt-title">🔥 틀린 단어 집중 학습</span>
+        <span class="rt-count" id="reviewCount">0개</span>
+      </div>
+      <div class="rt-desc">두 번 연속 맞히면 목록에서 빠져요</div>
+      <button class="primary coral" id="reviewBtn">틀린 단어 복습 시작하기</button>
+    </div>
+
+    <div class="seg" id="modeSeg">
+      <button data-mode="ek" class="on">영어 → 뜻</button>
+      <button data-mode="ke">뜻 → 영어</button>
+      <button data-mode="type">직접 쓰기</button>
+    </div>
+
+    <div class="section-title" id="secTitle">챕터를 골라요</div>
+    <div class="chips" id="chips"></div>
+
+    <div class="mode-note" id="homeNote"></div>
+
+    <div class="mini-row">
+      <button class="mini" id="exportBtn">진행상황 백업</button>
+      <button class="mini" id="importBtn">백업 불러오기</button>
+      <button class="mini danger" id="resetBtn">기록 초기화</button>
+    </div>
+    <input type="file" id="importFile" accept="application/json,.json" class="hidden">
+  </section>
+
+  <!-- ================= QUIZ ================= -->
+  <section id="quiz">
+    <div class="qtop">
+      <button class="iconbtn" id="backBtn">←</button>
+      <div class="progress"><i id="progFill"></i></div>
+      <div class="qcount" id="qCount">0/0</div>
+    </div>
+
+    <div class="card-q">
+      <div class="tag" id="qTag"></div>
+      <div class="streak" id="qStreak"></div>
+      <div class="prompt-label" id="promptLabel">영어 단어</div>
+      <div class="prompt" id="prompt">—</div>
+      <div class="prompt-hint" id="promptHint"></div>
+      <button class="speak hidden" id="speakBtn">🔊 발음 듣기</button>
+    </div>
+
+    <div class="options" id="options"></div>
+
+    <div class="type-wrap hidden" id="typeWrap">
+      <input id="typeInput" type="text" autocomplete="off" autocapitalize="off"
+             autocorrect="off" spellcheck="false" placeholder="영어로 입력">
+      <div class="answerline" id="answerLine"></div>
+    </div>
+
+    <div class="feedback" id="feedback"></div>
+    <button class="nextbtn" id="nextBtn">다음 →</button>
+  </section>
+
+  <!-- ================= RESULT ================= -->
+  <section id="result">
+    <div class="medal" id="medal">🎉</div>
+    <h2 id="resTitle">잘했어요!</h2>
+    <div class="line" id="resLine"></div>
+
+    <div class="scorebox">
+      <div class="b g"><div class="n" id="rCorrect">0</div><div class="k">맞은 단어</div></div>
+      <div class="b r"><div class="n" id="rWrong">0</div><div class="k">틀린 단어</div></div>
+      <div class="b"><div class="n" id="rRate">0%</div><div class="k">정답률</div></div>
+    </div>
+
+    <div class="wronglist" id="wrongList"></div>
+
+    <button class="primary leaf hidden" id="retryWrong">틀린 단어 다시 풀기</button>
+    <div class="row-btns">
+      <button class="ghost" id="againBtn">한 번 더</button>
+      <button class="ghost" id="homeBtn">챕터 선택</button>
+    </div>
+  </section>
+
+</div>
+
+<script>
+/* =====================================================================
+   DATA  — 워드마스터 중등 실력 40일 전체 (영어 : 한국어 대표뜻)
+   ===================================================================== */
+const DAYS = {
+1:{title:"성격 ①",words:[
+["generous","후한","인심이 후하다, 잘 베푸는"],["strict","엄격한","봐주지 않는, 규칙에 철저한"],["calm","차분한","마음이 차분한, 침착한"],["evil","사악한","아주 나쁘고 못된"],["serious","진지한","장난 아닌, 진심인"],
+["rude","무례한","예의 없는, 버릇없는"],["cautious","조심성 있는","조심스러운"],["honest","정직한","거짓말 안 하는"],["proud","자부심이 있는","자랑스러워하는"],["sensitive","민감한","예민한"],
+["cheerful","명랑한","밝고 즐거운"],["curious","호기심이 강한","궁금한 게 많은"],["cheer up","응원하다","기운 내라고 힘 주는"],["mean","의미하다","~라는 뜻이다 / 못되게 굴다"],["foolish","어리석은","바보 같은"],
+["active","활동적인","활발하게 움직이는"],["character","특징","성격, 특징 / 등장인물"],["positive","긍정적인","좋게 보는, 밝은"],["confident","자신 있는","자신감 있는"],["cruel","잔인한","모질고 무서운"],
+["make fun of","~를 놀리다","놀려대다, 비웃다"],["modest","별로 크지 않은","겸손한 / 그리 크지 않은"],["lazy","게으른","부지런하지 않은"],["negative","부정의","부정적인, 안 좋게 보는"],["brave","용감한","겁내지 않는"],
+["optimistic","낙관적인","잘될 거라 믿는"],["selfish","이기적인","자기만 생각하는"],["friendly","친절한","다정한, 사이좋은"],["careful","주의 깊은","조심하는"],["wise","현명한","지혜로운, 똑똑한"]
+]},
+2:{title:"외모 ①",words:[
+["skinny","여윈","바짝 마른, 삐쩍 마른"],["dye","염색하다","머리·천에 색을 물들이다"],["muscular","근육의","근육이 많은, 우람한"],["curly","곱슬곱슬한","머리가 곱슬곱슬한"],["charming","매력적인","매력적인, 사람을 끄는"],
+["young","젊은","나이가 어린"],["sideburns","구레나룻","귀 옆에 기른 수염"],["middle aged","중년의","40~50대쯤 되는 나이"],["fit","적합한","딱 맞는 / 몸이 탄탄한"],["good looking","잘생긴","보기 좋게 생긴, 잘생긴"],
+["cute","작고 예쁜","귀엽고 예쁜"],["overweight","과체중의","몸무게가 많이 나가는"],["slim","가느다란","날씬한, 가느다란"],["both A and B","A와 B 둘 다","A도 B도 둘 다"],["plain","명백한","뚜렷한 / 꾸밈 없는, 수수한"],
+["build","짓다","만들다, 짓다 / 체격"],["pretty","예쁜","예쁜"],["beard","턱수염","턱에 난 수염"],["thin","여윈","마른, 얇은"],["attractive","매력적인","끌리는, 매력 있는"],
+["lovely","사랑스러운","사랑스러운, 예쁜"],["beautiful","아름다운","아름다운"],["neat","말끔한","깔끔한, 정돈된"],["bald","대머리의","머리카락이 없는, 대머리"],["handsome","멋진","잘생긴"],
+["grow up","자라다","어른으로 자라다"],["image","이미지","이미지, 모습"],["ugly","추한","못생긴"],["mustache","콧수염","코 밑에 난 수염"],["appearance","외모","겉모습, 생김새"]
+]},
+3:{title:"감정 ①",words:[
+["emotion","정서","감정, 기분"],["calm down","마음을 가라앉히다","흥분을 가라앉히다"],["grateful","감사하는","고맙게 여기는"],["satisfied","만족하는","만족스러운"],["disappointed","실망한","기대에 못 미쳐 실망한"],
+["anxious","열망하는","몹시 하고 싶은 / 걱정되는"],["sympathy","동정","불쌍히 여기는 마음"],["joy","기쁨","큰 기쁨"],["surprised","놀란","놀란"],["cry","울다","울다"],
+["mad","화난","몹시 화난"],["upset","언짢게 생각하는","속상한, 기분 상한"],["frightened","놀란","겁먹은, 무서워하는"],["regret","유감","후회, 아쉬움"],["fear","두려워하다","무서워하다, 두려움"],
+["annoyed","화난","짜증난, 성가신"],["worried","걱정스러운","걱정하는"],["amused","즐기는","재미있어 하는"],["bother","귀찮게 하다","귀찮게 하다, 성가시게 하다"],["ashamed","부끄러운","창피한, 부끄러운"],
+["glad","즐거운","기쁜"],["enjoy","즐기다","즐기다"],["feel sorry for","~을 유감으로 여기다","~를 안쓰럽게 여기다"],["horrible","무시무시한","끔찍한, 소름 끼치는"],["depressed","낙담한","우울한, 기운 없는"],
+["excited","흥분되는","신난, 들뜬"],["laugh","웃다","소리내어 웃다"],["delighted","아주 기뻐하는","매우 기뻐하는"],["pleased","좋아하는","기분 좋은, 만족한"],["miss","놓치다","놓치다 / 그리워하다"]
+]},
+4:{title:"직업",words:[
+["detective","형사","사건을 수사하는 사람"],["accountant","회계사","돈·회계를 다루는 사람"],["security guard","보안 요원","경비원"],["professor","교수","대학 교수"],["scientist","과학자","과학자"],
+["judge","판단하다","판사 / 판단하다"],["secretary","비서","비서"],["be good at","~을 잘하다","~을 잘하다, ~에 능숙하다"],["salesperson","판매원","물건 파는 사람"],["novelist","소설가","소설 쓰는 작가"],
+["dentist","치과 의사","이 치료하는 의사"],["engineer","기술자","기술자, 엔지니어"],["announcer","아나운서","방송 진행자"],["fisherman","어부","고기 잡는 사람"],["carpenter","목수","나무로 물건 만드는 사람"],
+["soldier","군인","군인"],["lawyer","변호사","변호사"],["businessman","사업가","사업하는 사람"],["president","대통령","대통령 / 회장"],["baker","제빵사","빵 만드는 사람"],
+["reporter","리포터","기자"],["officer","장교","장교 / 관리"],["astronaut","우주 비행사","우주 비행사"],["hairdresser","이발사","미용사"],["mechanic","기계공","기계·차 고치는 사람"],
+["illustrator","삽화가","그림 그리는 사람"],["architect","건축가","건물 설계하는 사람"],["be interested in","~에 관심이 있다","~에 흥미가 있다"],["photographer","사진가","사진 찍는 사람"],["gardener","원예사","정원 가꾸는 사람"]
+]},
+5:{title:"옷 ①",words:[
+["button","단추","옷의 단추"],["uniform","균일한","똑같은 / 제복, 유니폼"],["wallet","지갑","돈 넣는 지갑"],["vest","조끼","조끼"],["boots","장화","목이 긴 부츠"],
+["dress","입다","원피스 / 옷을 입다"],["skirt","치마","치마"],["stockings","스타킹","긴 양말, 스타킹"],["overalls","작업복","멜빵 작업복"],["gloves","장갑","장갑"],
+["try on","~을 입어 보다","옷을 입어 보다"],["heels","굽 높은 구두","굽 높은 구두"],["suit","어울리다","정장 / 어울리다"],["pocket","호주머니","주머니"],["shorts","반바지","반바지"],
+["scarf","목도리","목도리, 스카프"],["belt","허리띠","허리띠"],["tie","매다","넥타이 / 묶다"],["take off","벗다","옷을 벗다 / 이륙하다"],["put on","~을 입다","옷을 입다"],
+["pants","바지","바지"],["athletic shoes","운동화","운동화"],["material","재료","천, 재료"],["jacket","재킷","재킷, 웃옷"],["socks","양말","양말"],
+["sweater","스웨터","스웨터"],["jeans","바지","청바지"],["purse","지갑","손지갑, 핸드백"],["bow tie","나비 넥타이","나비 넥타이"],["sandals","샌들","샌들"]
+]},
+6:{title:"음식 ①",words:[
+["set the table","식탁을 차리다","밥상을 차리다"],["honey","꿀","꿀"],["soup","수프","국, 수프"],["snack","과자","간식, 과자"],["cereal","곡물","곡물, 시리얼"],
+["diet","음식","식단 / 식이요법"],["egg","달걀","달걀"],["pepper","후추","후추 / 고추"],["powder","가루","가루"],["salt","소금","소금"],
+["flour","곡물가루","밀가루"],["noodle","국수","국수, 면"],["pickle","피클","피클, 절임"],["rice","쌀","쌀, 밥"],["butter","버터","버터"],
+["jam","잼","잼"],["appetizer","애피타이저","식사 전 나오는 음식"],["stew","스튜","찌개, 스튜"],["sugar","설탕","설탕"],["meat","고기","고기"],
+["meal","식사","끼니, 식사"],["eat out","외식하다","밖에서 사 먹다"],["steak","스테이크","스테이크"],["mustard","겨자","겨자, 머스타드"],["fish","물고기","생선, 물고기"],
+["pork","돼지고기","돼지고기"],["beef","소고기","소고기"],["grab","움켜쥐다","움켜쥐다, 잡다"],["side dish","반찬","반찬"],["bread","빵","빵"]
+]},
+7:{title:"주방 ①",words:[
+["kettle","주전자","물 끓이는 주전자"],["keep on ~ing","계속 ~하다","계속 ~하다"],["glass","유리","유리 / 유리컵"],["blender","믹서기","믹서기"],["boil","끓다","물이 끓다, 삶다"],
+["knife","칼","칼"],["jar","항아리","병, 항아리"],["pan","납작한 냄비","프라이팬"],["fry","기름에 튀기다","기름에 튀기다·부치다"],["grill","석쇠","석쇠에 굽다"],
+["tray","쟁반","쟁반"],["steam","김을 내다","김을 내다, 찌다"],["bake","굽다","오븐에 굽다"],["beat","이기다","이기다 / 휘젓다"],["basket","바구니","바구니"],
+["chop","쳐서 자르다","잘게 썰다"],["slice","한 조각","얇게 썬 한 조각"],["opener","오프너","병·캔 따개"],["plate","접시","접시"],["pour","붓다","액체를 붓다"],
+["recipe","조리법","요리법, 레시피"],["cabinet","진열장","수납장, 진열장"],["refrigerator","냉장고","냉장고"],["be used for","~에 사용되다","~에 쓰이다"],["handle","손잡이","손잡이 / 다루다"],
+["roll","두루마리","둘둘 만 것 / 구르다"],["bowl","그릇","움푹한 그릇"],["scoop","퍼내다","퍼내다, 뜨다"],["pot","단지","냄비, 단지"],["lid","뚜껑","뚜껑"]
+]},
+8:{title:"집 ①",words:[
+["floor","마루","바닥, 마루 / 층"],["lamp","램프","전등, 램프"],["sink","침몰하다","싱크대 / 가라앉다"],["garage","차고","차고"],["towel","수건","수건"],
+["yard","마당","마당"],["shelf","선반","선반"],["roof","지붕","지붕"],["ceiling","천장","천장"],["scale","규모","저울 / 규모"],
+["sheet","종이 한 장","종이 한 장 / 침대 시트"],["garden","정원","정원, 뜰"],["drawer","서랍","서랍"],["curtain","커튼","커튼"],["lawn","잔디","잔디밭"],
+["mirror","거울","거울"],["turn on","(기계·장비 등을) 켜다","(전원을) 켜다"],["water","물을 주다","물 / 물을 주다"],["neighbor","이웃 사람","이웃"],["soap","비누","비누"],
+["tap","톡톡 두드리다","톡톡 두드리다 / 수도꼭지"],["feed","먹이를 주다","먹이를 주다"],["gate","대문","대문, 문"],["knock","노크 소리","똑똑 두드리다"],["bathroom","화장실","화장실"],
+["bedroom","침실","침실"],["apartment","아파트","아파트"],["stair","계단","계단"],["in place","적소에","제자리에"],["laundry","세탁소","빨래, 세탁"]
+]},
+9:{title:"교통 ①",words:[
+["passenger","승객","승객, 탄 사람"],["bicycle","자전거","자전거"],["rail","철도","철도, 레일"],["harbor","항구","항구"],["on foot","걸어서","걸어서"],
+["accident","사고","사고"],["drive","운전하다","운전하다"],["curve","곡선","굽은 길, 곡선"],["transport","운송하다","실어 나르다"],["platform","승강장","승강장, 플랫폼"],
+["get on","~에 타다","버스·기차에 타다"],["gas","기체","기체 / 휘발유"],["track","흔적","철로 / 발자국"],["transfer","옮기다","갈아타다, 옮기다"],["crash","충돌","충돌, 부딪힘"],
+["subway","지하철","지하철"],["cross","십자가","건너다 / 십자가"],["forward","앞쪽에","앞으로"],["wheel","바퀴","바퀴"],["station","정거장","역, 정거장"],
+["seat","좌석","자리, 좌석"],["limit","제한","제한, 한계"],["route","길","길, 경로"],["fare","운임","교통 요금"],["traffic","교통","교통, 차량 흐름"],
+["stop","멈추다","멈추다 / 정류장"],["sign","기호","표지판 / 신호"],["road","길","길, 도로"],["park","공원","공원 / 주차하다"],["license","면허증","면허증"]
+]},
+10:{title:"사무실 ①",words:[
+["printer","프린터","인쇄기, 프린터"],["folder","서류철","서류철, 폴더"],["document","문서","문서, 서류"],["manager","관리자","관리자, 매니저"],["calendar","달력","달력"],
+["stationery","문구","문구류"],["eraser","지우개","지우개"],["message","메시지","메시지, 전할 말"],["deal with","~을 다루다","~을 처리하다·다루다"],["interview","면접","면접 / 인터뷰"],
+["desk","책상","책상"],["bookcase","책장","책장"],["punch","펀치","주먹으로 치다 / 구멍 뚫기"],["company","회사","회사"],["letter","편지","편지 / 글자"],
+["photocopy","복사","복사, 복사본"],["pin","핀","핀"],["fill out","(서류에) 적어 넣다","서류에 써 넣다"],["highlighter","형광펜","형광펜"],["seal","바다표범","바다표범 / 봉하다"],
+["calculator","계산기","계산기"],["chair","의자","의자"],["staple","주요 산물","주요 산물 / 스테이플러 심"],["printout","인쇄(물)","출력물, 인쇄물"],["glue","아교","풀, 접착제"],
+["envelope","봉투","편지 봉투"],["room","방","방"],["clip","클립","클립, 집게"],["scissors","가위","가위"],["call","부르다","부르다 / 전화하다"]
+]},
+11:{title:"길·장소",words:[
+["turn","돌다","돌다, 방향을 바꾸다"],["be known for","유명하다","~로 유명하다"],["signal","신호","신호"],["intersection","교차로","교차로"],["village","마을","마을"],
+["sewer","하수구","하수구"],["hospital","병원","병원"],["left","왼쪽에","왼쪽 / 떠났다(leave)"],["block","건물의 한 구획","한 블록, 구역"],["City Hall","시청","시청"],
+["department store","백화점","백화점"],["highway","고속도로","고속도로"],["bakery","빵집","빵집"],["sidewalk","(포장된) 보도","인도, 보도"],["drugstore","약국","약국"],
+["building","건물","건물"],["straight","곧은","곧은, 똑바로"],["avenue","대로","큰길, 대로"],["in the middle of","~의 가운데에","~의 한가운데에"],["crosswalk","횡단보도","횡단보도"],
+["patrol","순찰하다","순찰하다"],["pedestrian","보행자","보행자"],["museum","박물관","박물관"],["street","거리","거리, 길"],["direction","방향","방향"],
+["give ~ a ride","~를 태워다 주다","~를 차로 태워 주다"],["corner","모퉁이","모퉁이, 구석"],["trash","쓰레기","쓰레기"],["police station","경찰서","경찰서"],["fire station","소방서","소방서"]
+]},
+12:{title:"도구·집안일",words:[
+["switch","스위치","스위치 / 바꾸다"],["dig","파다","땅을 파다"],["hammer","망치","망치"],["fold","접다","접다, 개다"],["screw","나사","나사"],
+["drill","구멍을 내다","드릴로 구멍 뚫다"],["shovel","삽","삽"],["mop","닦다","대걸레로 닦다"],["clean up","깨끗이 치우다","깨끗이 치우다"],["lift","들어 올리다","들어 올리다"],
+["housework","집안일","집안일"],["saw","톱","톱 / 봤다(see)"],["flashlight","플래시","손전등"],["wash","씻다","씻다, 빨다"],["iron","철","철 / 다리미"],
+["outlet","상점","콘센트 / 상점"],["set up","~을 설치하다","설치하다, 세우다"],["wrench","렌치","렌치, 스패너"],["ladder","사다리","사다리"],["hang","매달다","매달다, 걸다"],
+["bucket","양동이","양동이"],["rake","갈퀴","갈퀴"],["carry","가지고 가다","나르다, 들고 가다"],["sweep","쓸다","빗자루로 쓸다"],["trim","다듬다","다듬다, 자르다"],
+["broom","비","빗자루"],["daily","매일의","매일의, 날마다"],["tool","도구","도구, 연장"],["dust","먼지","먼지"],["make friends","친구를 사귀다","친구를 사귀다"]
+]},
+13:{title:"마트·식품",words:[
+["freezer","냉동고","냉동실"],["cashier","출납계","계산원"],["line up","줄을 서다","줄을 서다"],["fresh","새로운","신선한, 새로운"],["seafood","해산물","해산물"],
+["ice","얼음","얼음"],["frozen food","냉동 식품","냉동식품"],["cart","짐마차","손수레, 카트"],["grain","곡식","곡식, 알갱이"],["piece","조각","조각, 하나"],
+["pack","짐을 싸다","짐을 싸다 / 묶음"],["grocery","식료품점","식료품 / 식료품점"],["for free","무료로","공짜로"],["vegetable","채소","채소"],["container","용기","그릇, 용기"],
+["bar","주점","막대 / 술집"],["bundle","다발","묶음, 다발"],["item","항목","물건, 항목"],["package","짐","소포, 꾸러미"],["smoked","훈제한","훈제한"],
+["pile","더미","쌓아 올린 더미"],["on sale","할인 판매중인","할인 중인"],["can","깡통","깡통, 캔"],["cash register","계산대","금전 등록기, 계산대"],["counter","계산대","계산대, 판매대"],
+["bin","쓰레기 통","쓰레기통"],["dairy","낙농업","유제품 / 낙농"],["spray","물보라","물을 뿌리다, 분무"],["aisle","통로","통로, 복도"],["bottle","병","병"]
+]},
+14:{title:"모양·상태",words:[
+["loose","느슨한","헐거운, 느슨한"],["high","높은","높은"],["heavy","무거운","무거운"],["square","정사각형","정사각형, 네모"],["colorful","색채가 풍부한","알록달록한"],
+["round","둥근","둥근"],["firm","견고한","단단한, 굳은 / 회사"],["open","열려있는","열린, 열다"],["oval","타원형","타원형, 계란형"],["metal","금속","금속, 쇠"],
+["empty","비어있는","텅 빈"],["be covered with","~으로 덮여있다","~로 덮여 있다"],["full","가득 찬","가득 찬"],["crack","갈라진 금","갈라진 금, 틈"],["wooden","나무의","나무로 된"],
+["sharp","날카로운","날카로운, 뾰족한"],["tight","꽉 조인","꽉 끼는, 팽팽한"],["dark","어두운","어두운, 캄캄한"],["famous","유명한","유명한"],["wide","넓은","넓은"],
+["triangle","삼각형","삼각형"],["shallow","얕은","얕은"],["plastic","플라스틱","플라스틱"],["deep","깊은","깊은"],["glitter","반짝이다","반짝반짝 빛나다"],
+["prefer A to B","B보다 A를 더 좋아하다","B보다 A를 더 좋아하다"],["light","불을 붙이다","가벼운 / 빛 / 불을 켜다"],["clean","깨끗한","깨끗한, 청소하다"],["low","낮은","낮은"],["flat","평평한","평평한, 납작한"]
+]},
+15:{title:"감각",words:[
+["focus on","~에 집중하다","~에 집중하다"],["sweet","단","달콤한"],["make sense","이해가 되다","말이 되다, 이해되다"],["feel","느끼다","느끼다, 만지다"],["listen","듣다","귀 기울여 듣다"],
+["discover","발견하다","발견하다, 알아내다"],["audio","음성의","소리의, 음성의"],["smooth","매끄러운","매끄러운, 부드러운"],["notice","주목하다","알아차리다, 눈치채다"],["loud","큰소리로","소리가 큰, 시끄러운"],
+["look","보다","보다, ~해 보이다"],["flavor","맛","맛, 풍미"],["noise","소음","시끄러운 소리, 소음"],["touch","건드리다","만지다, 건드리다"],["hard","굳은","단단한 / 어려운"],
+["bad","나쁜","나쁜"],["watch","지켜보다","지켜보다 / 손목시계"],["sour","신","신맛의"],["observe","알아채다","관찰하다, 알아채다"],["rough","거친","거친, 울퉁불퉁한"],
+["sight","시야","시력 / 광경"],["scream","소리치다","비명을 지르다"],["smell","냄새맡다","냄새 맡다, 냄새"],["stare","응시하다","빤히 쳐다보다"],["juicy","즙이 많은","즙이 많은"],
+["bitter","쓴","쓴맛의"],["objective","목표의","목표 / 객관적인"],["whisper","속삭임","속삭이다"],["sense","감각","감각 / 느낌"],["soft","부드러운","부드러운, 푹신한"]
+]},
+16:{title:"병·건강",words:[
+["blind","눈 먼","눈이 안 보이는"],["bruise","타박상","멍"],["symptom","증상","증상"],["medical","의학의","의료의, 의학의"],["recover","회복하다","회복하다, 낫다"],
+["disease","병","질병"],["examine","조사하다","진찰하다, 살펴보다"],["wound","상처","상처, 부상"],["sneeze","재채기하다","재채기하다"],["cure","치료하다","병을 낫게 하다"],
+["cut","자르다","베다, 자르다"],["virus","바이러스","바이러스"],["see a doctor","의사의 진찰을 받다","병원에 가다"],["patient","참을성이 있는","환자 / 참을성 있는"],["emergency","비상시","응급 상황"],
+["prevent","막다","막다, 예방하다"],["medicine","약","약, 의학"],["deaf","귀가 먼","귀가 안 들리는"],["catch a cold","감기에 걸리다","감기에 걸리다"],["relax","긴장을 늦추다","긴장을 풀다, 쉬다"],
+["ache","아픔","쑤시는 아픔"],["burn","불에 타다","불에 타다, 데다"],["fever","열병","열, 발열"],["cancer","암","암"],["dizzy","현기증 나는","어지러운"],
+["sore","아픈","아픈, 쑤시는"],["cough","기침","기침하다"],["operate","조종하다","수술하다 / 작동시키다"],["vomit","토하다","토하다"],["pain","아픔","고통, 아픔"]
+]},
+17:{title:"여행 ①",words:[
+["souvenir","기념품","기념품"],["visa","비자","비자"],["claim","요구하다","요구하다, 주장하다"],["itinerary","여행 일정","여행 일정표"],["attendant","시중드는 사람","안내원, 승무원"],
+["security","안전","보안, 안전"],["destination","목적지","목적지, 도착지"],["flight","비행","비행, 항공편"],["journey","여행","여정, 긴 여행"],["delay","연기하다","미루다, 늦추다 / 지연"],
+["trip","여행","여행"],["insurance","보험","보험"],["sightseeing","관광","관광, 구경"],["passport","여권","여권"],["arrive","도착하다","도착하다"],
+["reach","도착하다","~에 이르다, 도착하다"],["board","판자","판자 / 탑승하다"],["abroad","외국으로","외국으로, 해외로"],["jet lag","시차로 인한 피로함","시차 적응 못한 피곤함"],["all over the world","전 세계에 걸쳐","전 세계에"],
+["apply","지원하다","신청하다, 지원하다"],["baggage","여행 수하물","여행 짐, 수하물"],["check","확인하다","확인하다, 검사하다"],["landscape","풍경","풍경, 경치"],["land","땅","땅, 육지 / 착륙하다"],
+["scenery","풍경","경치, 풍경"],["reserve","예약하다","예약하다"],["cancel","취소하다","취소하다"],["depart","떠나다","떠나다, 출발하다"],["have a good time","~와 즐거운 시간을 보내다","즐거운 시간을 보내다"]
+]},
+18:{title:"취미",words:[
+["magic","마술","마술, 마법"],["model","모형","모형 / 모델"],["mania","열광","열광, 매니아"],["comic","희극의","웃긴 / 만화"],["from time to time","때때로","가끔, 이따금"],
+["puzzle","수수께끼","퍼즐, 수수께끼"],["activity","활동","활동"],["chat","잡담","수다, 잡담"],["jog","천천히 달리다","천천히 뛰다, 조깅"],["leisure","여가","여가, 자유 시간"],
+["fix","고치다","고치다, 수리하다"],["movie","영화","영화"],["spend ~ on ~ing","~하는데 ~ 쓰다","~하는 데 (돈·시간을) 쓰다"],["musical","뮤지컬","뮤지컬"],["stamp","우표","우표 / 도장"],
+["involve","관여하다","관련시키다, 포함하다"],["dance","춤추다","춤추다"],["collect","모으다","모으다, 수집하다"],["favorite","매우 좋아하는","제일 좋아하는"],["camp","캠프장","야영지 / 캠프하다"],
+["craft","솜씨","손재주, 공예"],["pleasure","즐거움","즐거움, 기쁨"],["go out for a walk","산책하러 가다","산책하러 나가다"],["interest","이익","관심, 흥미 / 이자"],["knit","뜨개질하다","뜨개질하다"],
+["volunteer","자원봉사자","자원봉사자"],["hike","도보 여행","등산, 하이킹"],["game","놀이","놀이, 게임"],["chess","체스","체스"],["picture","사진","그림, 사진"]
+]},
+19:{title:"운동",words:[
+["match","경기","경기, 시합 / 성냥"],["athlete","운동선수","운동선수"],["skate","스케이트","스케이트 타다"],["dive","다이빙하다","물에 뛰어들다, 다이빙"],["basketball","농구","농구"],
+["score","득점","점수, 득점"],["prize","상","상, 상품"],["bowling","볼링","볼링"],["sweat","땀","땀 / 땀 흘리다"],["player","운동선수","선수"],
+["shoot","쏘다","쏘다 / 슛하다"],["competition","경쟁","경쟁, 대회"],["swim","수영하다","수영하다"],["champion","챔피언","챔피언, 우승자"],["outdoor","야외의","야외의"],
+["baseball","야구","야구"],["base","기초","기초 / 베이스"],["kick","차다","발로 차다"],["catch","붙잡다","잡다, 붙잡다"],["racket","라켓","라켓"],
+["defender","수비수","수비수"],["referee","심판","심판"],["coach","코치","코치 / 감독"],["surf","정보를 검색하다","파도타다 / 인터넷 검색"],["goal","목표","목표 / 골"],
+["batter","타자","타자"],["warm up","준비운동을 하다","몸을 풀다, 준비운동"],["up and down","위아래로","위아래로"],["throw","던지다","던지다"],["stretch","펴다","쭉 펴다, 늘이다"]
+]},
+20:{title:"쇼핑",words:[
+["change","변화하다","바꾸다 / 거스름돈"],["receipt","수령","영수증"],["sale","판매","판매 / 할인"],["expensive","비싼","비싼"],["tax","세금","세금"],
+["cheap","값싼","싼, 저렴한"],["sell","팔다","팔다"],["look around","주위를 둘러보다","둘러보다"],["catalog","목록","상품 목록, 카탈로그"],["reasonable","합리적인","(값이) 적당한, 합리적인"],
+["gift","선물","선물"],["display","전시하다","전시하다, 진열"],["goods","상품","상품, 물건"],["quality","품질","품질"],["retail","소매","소매(낱개로 팖)"],
+["cash","현금","현금"],["discount","할인","할인"],["exchange","교환하다","교환하다, 바꾸다"],["pay","지불하다","지불하다, 값 내다"],["choose","선택하다","고르다, 선택하다"],
+["auction","경매","경매"],["medium","중간의","중간의 / 중간 크기"],["tag","꼬리표","꼬리표, 가격표"],["business","사업","사업, 장사"],["stand","서다","서다 / 가판대"],
+["customer","소비자","손님, 고객"],["drop by","잠깐 들르다","잠깐 들르다"],["select","선택하다","고르다, 선택하다"],["brand name","(유명) 상표가 붙은","유명 상표의"],["store","가게","가게, 상점"]
+]},
+21:{title:"식당",words:[
+["dessert","디저트","후식, 디저트"],["rare","매우 드문","드문 / (고기가) 덜 익은"],["order","명령하다","주문하다 / 명령"],["serve","제공하다","음식을 내다, 대접하다"],["be ready to","~할 준비를 하다","~할 준비가 되다"],
+["tip","팁","팁 / 조언 / 끝"],["set","정하다","정하다, 놓다 / 세트"],["calorie","칼로리","칼로리, 열량"],["wrap","포장하다","포장하다, 싸다"],["buffet","뷔페","뷔페"],
+["waiter","웨이터","웨이터, 종업원"],["either A or B","A든지 B든지","A 아니면 B 둘 중 하나"],["cook","요리사","요리사 / 요리하다"],["spill","엎지르다","흘리다, 엎지르다"],["wipe","닦다","닦다, 훔치다"],
+["bill","청구서","계산서 / 지폐"],["chef","요리사","요리사, 셰프"],["bite","물다","물다, 깨물다"],["napkin","(식탁용)냅킨","냅킨"],["beverage","음료","음료"],
+["deliver","배달하다","배달하다"],["total","전체의","전체의, 합계"],["wait for","~을 기다리다","~을 기다리다"],["ingredient","성분","재료, 성분"],["recommend","추천하다","추천하다"],
+["straw","밀짚","빨대 / 짚"],["refill","다시 채우다","다시 채우다, 리필"],["appetite","식욕","식욕"],["take","데려오다","가져가다, 데려가다"],["special","특별한","특별한"]
+]},
+22:{title:"바다·해변",words:[
+["shade","그늘","그늘"],["throw away","~을 버리다","버리다"],["all day long","하루종일","하루 종일"],["parasol","파라솔","양산, 파라솔"],["binoculars","쌍안경","쌍안경"],
+["scuba","스쿠버","스쿠버 잠수 장비"],["float","뜨다","물에 뜨다"],["suntan","햇볕에 그을림","햇볕에 그을림, 선탠"],["sunblock","자외선 방지 크림","선크림"],["cooler","냉장고","아이스박스"],
+["sand","모래","모래"],["sunglasses","선글라스","선글라스"],["shore","물가","바닷가, 물가"],["swimsuit","수영복","수영복"],["raft","뗏목","뗏목, 고무보트"],
+["whistle","휘파람을 불다","휘파람 / 호루라기"],["yacht","요트","요트"],["lifeboat","구명보트","구명보트"],["blanket","담요","담요"],["shell","조개","조개껍데기"],
+["mat","매트","매트, 깔개"],["vacation","휴가","방학, 휴가"],["look forward to ~ing","~하기를 고대하다","~하기를 몹시 기다리다"],["lifeguard","인명 구조원","안전요원, 구조원"],["sunbath","일광욕","일광욕"],
+["snorkel","스노클","스노클(잠수 호흡관)"],["wave","파도","파도 / 손 흔들다"],["pebble","조약돌","조약돌, 자갈"],["flipper","지느러미","오리발 / 지느러미"],["expose","노출시키다","드러내다, 노출하다"]
+]},
+23:{title:"기념일",words:[
+["mask","가면","가면, 마스크"],["take place","발생하다","열리다, 일어나다"],["lantern","랜턴","등불, 랜턴"],["celebrate","축하하다","축하하다, 기념하다"],["Christmas","크리스마스","크리스마스"],
+["hide","숨다","숨다, 숨기다"],["invitation","초대장","초대, 초대장"],["festival","잔치","축제"],["reindeer","순록","순록"],["costume","의상","의상, 복장"],
+["year","년","해, 년"],["anniversary","기념일","기념일"],["congratulation","축하","축하"],["gather","모으다","모으다, 모이다"],["turkey","칠면조","칠면조"],
+["candy","사탕","사탕"],["crowded","혼잡한","붐비는, 복잡한"],["stuff","재료","물건 / 채워 넣다"],["honeymoon","신혼여행","신혼여행"],["be similar to","~와 비슷하다","~와 비슷하다"],
+["eve","전날","(축제) 전날 밤"],["halloween","할로윈","핼러윈"],["Thanksgiving","추수감사절","추수감사절"],["Easter","부활절","부활절"],["decorate","장식하다","장식하다, 꾸미다"],
+["witch","마녀","마녀"],["valentine","발렌타인","밸런타인(연인)"],["trick","장난","장난 / 속임수"],["blow","불다","불다, 바람 불다"],["wish","바라다","바라다, 소원"]
+]},
+24:{title:"공원·나들이",words:[
+["picnic","소풍","소풍"],["bench","벤치","긴 의자, 벤치"],["botanical garden","식물원","식물원"],["sleeping bag","침낭","침낭"],["peak","뾰족한 끝","산꼭대기, 정상"],
+["because of","~때문에","~ 때문에"],["get together","모이다","모이다, 만나다"],["concert","음악회","음악회, 콘서트"],["slide","미끄러지다","미끄럼틀 / 미끄러지다"],["sail","배로 가다","배를 타고 가다, 항해"],
+["fishing rod","낚시대","낚싯대"],["zoo","동물원","동물원"],["ride","말을 타다","타다, 타기"],["be filled with","~로 가득차 있다","~로 가득 차다"],["swing","그네","그네 / 흔들다"],
+["aquarium","수족관","수족관"],["visit","방문하다","방문하다"],["fountain","분수","분수"],["thermos","보온병","보온병"],["rapids","급류","급류, 여울"],
+["amusement","즐거움","놀이, 즐거움"],["event","사건","행사, 사건"],["backpack","배낭","배낭"],["walk","걷다","걷다, 산책"],["playground","운동장","놀이터, 운동장"],
+["merry-go-round","회전목마","회전목마"],["seesaw","시소","시소"],["rope","밧줄","밧줄, 줄"],["flea market","벼룩시장","벼룩시장"],["campfire","모닥불","모닥불, 캠프파이어"]
+]},
+25:{title:"자연 ①",words:[
+["polar","극지의","극지방의, 북극·남극의"],["waterfall","폭포","폭포"],["tide","조류","밀물과 썰물, 조수"],["landslide","산사태","산사태"],["river","강","강"],
+["thunder","천둥","천둥"],["right away","곧장","곧바로, 즉시"],["stream","개천","시내, 개울"],["element","요소","요소, 성분"],["hurricane","허리케인","허리케인(큰 태풍)"],
+["forest","숲","숲"],["source","원천","근원, 출처"],["creature","생물","생물, 동물"],["lightning","번개","번개"],["breeze","산들바람","산들바람, 미풍"],
+["earthquake","지진","지진"],["disaster","재해","재난, 재해"],["natural","자연의","자연의, 천연의"],["find out","발견하다","알아내다"],["food chain","먹이 사슬","먹이 사슬"],
+["ocean","대양","바다, 대양"],["cliff","벼랑","절벽, 벼랑"],["desert","사막","사막"],["flood","홍수","홍수"],["lake","호수","호수"],
+["coast","해안","해안, 바닷가"],["valley","골짜기","골짜기, 계곡"],["appear","나타나다","나타나다"],["explore","탐험하다","탐험하다"],["volcano","화산","화산"]
+]},
+26:{title:"날씨",words:[
+["dry","마른","마른, 건조한"],["condition","상태","상태, 조건"],["windy","바람부는","바람 부는"],["hail","우박","우박"],["blizzard","눈보라","눈보라"],
+["up to","~까지","~까지"],["moist","축축한","촉촉한, 축축한"],["climate","기후","기후"],["storm","폭풍","폭풍우"],["melt","녹다","녹다, 녹이다"],
+["freezing","얼어붙은","꽁꽁 얼 듯 추운"],["sticky","끈적끈적한","끈적끈적한"],["sunny","양지바른","화창한, 햇살 좋은"],["rainy","비가 오는","비 오는"],["drought","가뭄","가뭄"],
+["clear","명확한","맑은, 분명한"],["drizzle","이슬비","이슬비, 가랑비"],["forecast","예상하다","일기예보 / 예측하다"],["rainfall","강우량","강수량"],["icy","얼음의","얼음처럼 찬, 빙판의"],
+["humid","습기 있는","습한, 눅눅한"],["snowstorm","눈보라","눈보라"],["on the way","~하는 도중에","가는 길에, 도중에"],["cloudy","구름이 낀","흐린, 구름 낀"],["snowy","눈이 오는","눈 오는"],
+["mild","따뜻한","온화한, 포근한"],["gale","강풍","강풍"],["temperature","온도","온도, 기온"],["degree","정도","온도의 도 / 정도"],["foggy","안개 낀","안개 낀"]
+]},
+27:{title:"농장",words:[
+["barn","헛간","헛간, 외양간"],["pasture","목장","목초지, 풀밭"],["bull","황소","황소"],["goat","염소","염소"],["crop","농작물","농작물"],
+["run away","달아나다","도망치다"],["farm","농장","농장"],["shepherd","양치기","양치기"],["cowboy","카우보이","카우보이"],["harvest","수확","수확, 추수"],
+["shed","헛간","작은 헛간, 창고"],["lay","두다","놓다 / 알을 낳다"],["scarecrow","허수아비","허수아비"],["pig","돼지","돼지"],["cotton","솜","목화, 솜"],
+["vineyard","포도원","포도밭"],["meadow","목초지","풀밭, 초원"],["orchard","과수원","과수원"],["livestock","가축","가축"],["field","들판","들판, 밭"],
+["horse","말","말"],["buffalo","물소","물소, 들소"],["farmhouse","농가","농가"],["chicken","닭","닭 / 닭고기"],["cultivate","경작하다","경작하다, 재배하다"],
+["cattle","소","소 떼"],["take care of","~을 돌보다","~을 돌보다"],["calf","송아지","송아지"],["hay","건초","건초, 마른풀"],["ranch","목장","목장"]
+]},
+28:{title:"식물",words:[
+["thorn","가시","가시"],["trunk","나무줄기","나무 몸통 / 트렁크"],["bough","큰 가지","큰 나뭇가지"],["cut off","잘라내다","잘라 내다"],["pine tree","소나무","소나무"],
+["stem","줄기","줄기"],["fertilizer","거름","거름, 비료"],["sprout","싹이 돋다","싹이 트다"],["day by day","나날이","날마다, 나날이"],["bud","꽃봉오리","꽃봉오리, 싹"],
+["bush","수풀","덤불, 수풀"],["needle","바늘","바늘"],["bark","나무껍질","나무껍질 / 개가 짖다"],["cherry tree","벚나무","벚나무"],["little by little","조금씩","조금씩"],
+["petal","꽃잎","꽃잎"],["root","뿌리","뿌리"],["maple","단풍나무","단풍나무"],["palm","손바닥","손바닥 / 야자나무"],["grass","풀","풀, 잔디"],
+["bloom","꽃이 피다","꽃이 피다"],["branch","나뭇가지","나뭇가지"],["bamboo","대나무","대나무"],["herb","식용식물","허브, 약초"],["fruit","과일","과일, 열매"],
+["bulb","전구","전구 / 알뿌리"],["poisonous","유독한","독이 있는"],["seed","씨앗","씨, 씨앗"],["cactus","선인장","선인장"],["weed","잡초","잡초"]
+]},
+29:{title:"동물 ①",words:[
+["crocodile","악어","악어"],["leopard","표범","표범"],["bat","배트","박쥐 / 방망이"],["zebra","얼룩말","얼룩말"],["dinosaur","공룡","공룡"],
+["make friends","친구를 사귀다","친구를 사귀다"],["octopus","문어","문어"],["tiger","호랑이","호랑이"],["giraffe","기린","기린"],["deer","사슴","사슴"],
+["bird cage","새장","새장"],["hippo","하마","하마"],["whale","고래","고래"],["on one's own","혼자서","혼자서, 스스로"],["lizard","도마뱀","도마뱀"],
+["frog","개구리","개구리"],["fox","여우","여우"],["bear","곰","곰 / 참다"],["jellyfish","해파리","해파리"],["rat","쥐","쥐"],
+["rhino","코뿔소","코뿔소"],["kangaroo","캥거루","캥거루"],["turtle","거북이","거북"],["snake","뱀","뱀"],["fish tank","어항","어항"],
+["camel","낙타","낙타"],["lion","사자","사자"],["dolphin","돌고래","돌고래"],["shark","상어","상어"],["sea horse","해마","해마"]
+]},
+30:{title:"동물 ②·곤충",words:[
+["wing","날개","날개"],["swallow","삼키다","삼키다 / 제비"],["caterpillar","애벌레","애벌레"],["all the time","항상","항상, 늘"],["hummingbird","벌새","벌새"],
+["ostrich","타조","타조"],["moth","나방","나방"],["goose","거위","거위"],["beak","부리","새의 부리"],["spider","거미","거미"],
+["peacock","공작의 수컷","수컷 공작"],["insect","곤충","곤충, 벌레"],["butterfly","나비","나비"],["cricket","귀뚜라미","귀뚜라미 / 크리켓"],["ladybug","무당벌레","무당벌레"],
+["bee","벌","벌"],["owl","올빼미","올빼미, 부엉이"],["flea","벼룩","벼룩"],["parrot","앵무새","앵무새"],["cuckoo","뻐꾸기","뻐꾸기"],
+["eagle","독수리","독수리"],["crow","까마귀","까마귀"],["such as","가령","~와 같은, 예를 들면"],["mosquito","모기","모기"],["pigeon","비둘기","비둘기"],
+["thanks to","~덕분에","~ 덕분에"],["swan","백조","백조"],["penguin","펭귄","펭귄"],["hen","암탉","암탉"],["beetle","딱정벌레","딱정벌레"]
+]},
+31:{title:"환경",words:[
+["destroy","파괴하다","파괴하다, 부수다"],["leak","누출","새다, 누출"],["fuel","연료","연료"],["cause","일으키다","~을 일으키다 / 원인"],["electricity","전기","전기"],
+["damage","손상시키다","피해, 손상 / 해치다"],["protect","보호하다","보호하다, 지키다"],["ruin","파멸하다","망치다, 파멸시키다"],["acid","산","산 / 산성의"],["separate","분리된","분리하다 / 따로 떨어진"],
+["endangered","멸종위기에 처한","멸종 위기의"],["global warming","지구온난화","지구 온난화"],["fossil","화석","화석"],["resource","원천","자원"],["pollution","오염","오염, 공해"],
+["back and forth","앞뒤로","앞뒤로, 왔다 갔다"],["smog","스모그","스모그(공기 오염)"],["pure","순수한","순수한, 깨끗한"],["garbage","쓰레기","쓰레기"],["exhaust","다 써 버리다","다 써 버리다 / 배기가스"],
+["greenhouse","온실","온실"],["raw","날것의","날것의, 익히지 않은"],["shortage","부족","부족"],["share","함께 나누다","함께 쓰다, 나누다"],["effect","결과","영향, 효과"],
+["toxic","유독한","독성의, 유독한"],["reduce","감소시키다","줄이다"],["environment","환경","환경"],["overuse","남용하다","지나치게 많이 쓰다"],["be worried about","~에 대해 걱정하다","~을 걱정하다"]
+]},
+32:{title:"과학·기술",words:[
+["electric","전기의","전기의"],["transmit","보내다","전송하다, 보내다"],["browse","검색하다","둘러보다, 검색하다"],["measure","치수","재다, 측정하다"],["inform","알리다","알리다, 통지하다"],
+["important","중요한","중요한"],["technology","기술","기술"],["charge","요금","요금 / 충전하다"],["come up with","~을 생각해내다","생각해 내다, 떠올리다"],["multiply","곱하다","곱하다 / 늘어나다"],
+["invent","발명하다","발명하다"],["machine","기계","기계"],["formula","공식","공식"],["wireless","무선의","무선의"],["prove","증명하다","증명하다, 입증하다"],
+["experiment","실험","실험"],["lead to","~의 결과에 이르다","~로 이어지다, ~을 낳다"],["vacuum","진공의","진공 / 진공청소기"],["chemical","화학제품","화학 물질 / 화학의"],["delete","삭제하다","지우다, 삭제하다"],
+["gravity","중력","중력"],["data","데이터","자료, 데이터"],["mobile","이동성이 있는","이동하는 / 휴대용"],["inspect","검사하다","검사하다, 점검하다"],["visible","눈에 보이는","눈에 보이는"],
+["method","방법","방법"],["imagine","상상하다","상상하다"],["device","장치","장치, 기기"],["cell","세포","세포 / 칸"],["react","반응하다","반응하다"]
+]},
+33:{title:"우주",words:[
+["eclipse","일식","일식·월식"],["Venus","금성","금성"],["milky way","은하수","은하수"],["rocket","로켓트","로켓"],["crew","승무원","승무원, 팀원"],
+["light year","광년","광년(빛이 1년 가는 거리)"],["Saturn","토성","토성"],["lunar","달의","달의"],["Mars","화성","화성"],["outer","밖의","바깥의, 외부의"],
+["solar","태양의","태양의"],["big bang","빅뱅","빅뱅(우주 대폭발)"],["astronomer","천문학자","천문학자"],["space shuttle","우주선","우주 왕복선"],["orbit","궤도","궤도, 돌다"],
+["satellite","위성","인공위성 / 위성"],["astronomy","천문학","천문학"],["galaxy","은하","은하계"],["surface","표면","표면, 겉면"],["Jupiter","목성","목성"],
+["by chance","우연히","우연히"],["mercury","수은","수성 / 수은"],["telescope","망원경","망원경"],["planet","혹성","행성"],["comet","혜성","혜성"],
+["universe","우주","우주"],["earth","지구","지구"],["space station","우주 정거장","우주 정거장"],["far from","~로부터 먼","~에서 멀리 떨어진"],["ring","반지","반지 / 고리 / 울리다"]
+]},
+34:{title:"에너지",words:[
+["utility pole","전신주","전봇대"],["coal","석탄","석탄"],["power","힘","힘 / 전력"],["nuclear","핵의","핵의, 원자력의"],["generate","발생시키다","발생시키다, 만들어 내다"],
+["efficiency","능률","효율, 능률"],["heat","열","열, 더위"],["conserve","보존하다","아껴 쓰다, 보존하다"],["windmill","풍차","풍차"],["crisis","위기","위기"],
+["natural gas","천연가스","천연가스"],["power line","송전선","송전선, 전깃줄"],["dam","댐","댐"],["produce","생산하다","생산하다, 만들다"],["authorized","허가된","허가받은, 공인된"],
+["tidal","조수의","조수의, 밀물 썰물의"],["consume","소비하다","소비하다, 쓰다"],["and so on","기타 등등","기타 등등"],["transmission tower","송전탑","송전탑"],["mine","나의것","나의 것 / 광산"],
+["be made up of","~로 이루어져 있다","~로 이루어져 있다"],["abundant","풍족한","풍부한, 많은"],["transform","바꾸다","완전히 바꾸다"],["battery","배터리","건전지, 배터리"],["factory","공장","공장"],
+["careless","부주의한","부주의한, 조심성 없는"],["wind","바람","바람"],["turn into","~으로 변하다","~로 변하다, 바뀌다"],["solar collector","태양열 집열기","태양열 집열판"],["radioactive","방사능의","방사능의"]
+]},
+35:{title:"교육 ①",words:[
+["instruct","지시하다","가르치다, 지시하다"],["memorize","기억하다","외우다, 암기하다"],["college","단과 대학","대학"],["play a role","역할을 하다","역할을 하다"],["educate","교육하다","교육하다, 가르치다"],
+["intelligency","지성","지능, 지성"],["absent","결석한","결석한, 자리에 없는"],["pay attention to","~에 주의를 기울이다","~에 주의를 기울이다"],["lecture","강의","강의, 강연"],["elementary","초보의","초등의, 기초의"],
+["semester","학기","학기"],["discuss","토의하다","의논하다, 토론하다"],["academic","학문의","학문의, 학업의"],["attend","출석하다","참석하다, 출석하다"],["pupil","학생","학생, 제자"],
+["alternative","대안","대안, 다른 선택"],["admit","인정하다","인정하다 / 입학 허가"],["graduate","졸업하다","졸업하다"],["submit","제출하다","제출하다"],["kindergarten","유치원","유치원"],
+["tutor","강사","개인 교사, 가정교사"],["knowledge","지식","지식"],["university","종합대학","대학교"],["evaluate","평가하다","평가하다"],["encourage","격려하다","격려하다, 용기를 주다"],
+["explain","설명하다","설명하다"],["entrance","입장","입구 / 입학"],["exam","시험","시험"],["counsel","조언","조언, 상담"],["scholarship","장학금","장학금"]
+]},
+36:{title:"학교",words:[
+["hallway","복도","복도"],["get along with","~와 사이좋게 지내다","~와 사이좋게 지내다"],["laboratory","실험실","실험실"],["locker","사물함","사물함"],["hall","강당","강당 / 복도"],
+["classmate","학급친구","반 친구"],["auditorium","강당","강당"],["club","곤봉","동아리 / 곤봉"],["P.E","체육","체육"],["ask ~ a favor","~에게 부탁하다","~에게 부탁하다"],
+["classroom","교실","교실"],["take part in","~에 참여하다","~에 참여하다"],["principal","주요한","교장 / 주요한"],["chalk board","칠판","칠판"],["partner","동업자","짝, 동료"],
+["bulletin board","온라인 게시판","게시판"],["schoolmate","학교 친구","학교 친구"],["math","수학","수학"],["assignment","할당","과제, 숙제"],["cafeteria","간이 식당","구내식당"],
+["marker","보드 마커","매직펜, 마커"],["senior","손위의","윗사람 / 상급생"],["textbook","교과서","교과서"],["chalk","분필","분필"],["library","도서관","도서관"],
+["homeroom teacher","담임 선생님","담임 선생님"],["subject","지위","과목 / 주제"],["project","계획","과제, 계획"],["conversation","회화","대화"],["homework","숙제","숙제"]
+]},
+37:{title:"경제·사회",words:[
+["predict","예측하다","예측하다, 예상하다"],["influence","영향","영향 / 영향을 주다"],["demand","요구","요구, 수요"],["public","공공의","공공의, 대중의"],["culture","문화","문화"],
+["export","수출하다","수출하다"],["invest","투자하다","투자하다"],["individual","개인의","개인의 / 개인"],["local","그 지역의","지역의, 현지의"],["duty","(법적·도덕적인) 의무","의무 / 세금"],
+["citizen","시민","시민, 국민"],["show off","자랑하다","뽐내다, 자랑하다"],["account","설명","계좌 / 설명"],["value","가치","가치"],["look for","~을 찾다","~을 찾다"],
+["debt","빚","빚, 부채"],["employ","고용하다","고용하다"],["import","수입","수입하다"],["tradition","전통","전통"],["relationship","관계","관계, 사이"],
+["consumer","소비자","소비자"],["supply","공급하다","공급하다"],["obstacle","장애","장애물"],["status","지위","지위, 신분"],["responsibility","책임","책임"],
+["crowd","군중","군중, 사람들"],["property","재산","재산 / 부동산"],["moral","도덕적인","도덕의, 도덕적인"],["salary","봉급","월급, 봉급"],["donate","기부하다","기부하다"]
+]},
+38:{title:"법·정치",words:[
+["punish","벌하다","벌하다, 처벌하다"],["democracy","민주주의","민주주의"],["elect","선거하다","선출하다, 뽑다"],["represent","상징하다","대표하다 / 상징하다"],["guilty","유죄의","유죄의 / 죄책감 드는"],
+["arrest","체포하다","체포하다"],["argue","주장하다","말다툼하다 / 주장하다"],["look into","조사하다","조사하다, 살펴보다"],["policy","정책","정책, 방침"],["majority","대다수","다수, 대다수"],
+["innocent","결백한","무죄의, 결백한"],["justice","정의","정의, 공정"],["vote","투표하다","투표하다"],["compensate","보상하다","보상하다"],["protest","항의","항의하다, 시위"],
+["trial","재판","재판 / 시도"],["sentence","문장","문장 / 형벌"],["witness","증인","목격자, 증인"],["victim","희생","피해자, 희생자"],["gap","틈","틈, 차이"],
+["minority","소수","소수"],["party","파티","파티 / 정당"],["crime","범죄","범죄"],["suspect","의심하다","의심하다 / 용의자"],["murder","살인하다","살인 / 죽이다"],
+["illegal","불법의","불법의"],["be supposed to","~하기로 되어 있다","~하기로 되어 있다"],["diplomat","외교관","외교관"],["candidate","지원자","후보자, 지원자"],["government","통치","정부"]
+]},
+39:{title:"종교·역사",words:[
+["soul","정신","영혼, 마음"],["age","나이","나이 / 시대"],["be based on","~에 근거를 두다","~에 근거하다, 바탕을 두다"],["christianity","기독교 신앙","기독교"],["Judaism","유대교","유대교"],
+["belief","믿음","믿음, 신념"],["Buddhism","불교","불교"],["empire","제국","제국"],["weapon","무기","무기"],["battle","싸움","전투, 싸움"],
+["ancient","옛날의","고대의, 아주 오래된"],["rule","규칙","규칙 / 다스리다"],["century","세기","100년, 세기"],["date back","거슬러 올라가다","~까지 거슬러 올라가다"],["Islam","이슬람교","이슬람교"],
+["war","전쟁","전쟁"],["spiritual","정신적인","정신의, 영적인"],["charity","자애","자선, 자비"],["revolution","혁명","혁명"],["faithful","믿음직한","충실한, 믿음직한"],
+["independence","독립","독립"],["civilization","문명","문명"],["colony","식민지","식민지"],["invade","침해하다","침략하다, 쳐들어가다"],["religious","종교적인","종교의, 종교적인"],
+["peace","평화","평화"],["ceremony","의식","의식, 예식"],["pray","기도하다","기도하다, 빌다"],["attack","공격하다","공격하다"],["hinduism","힌두교","힌두교"]
+]},
+40:{title:"세계·국제",words:[
+["rural","전원의","시골의, 농촌의"],["ethnic","인종의","민족의, 인종의"],["break out","전쟁이 일어나다","(전쟁·불이) 일어나다"],["international","국제적인","국제의, 나라 간의"],["organization","조직","조직, 단체"],
+["agreement","동의","합의, 동의"],["consist of","~로 구성되어 있다","~로 이루어져 있다"],["mutual","상호의","서로의, 상호의"],["national","국가의","국가의, 전국의"],["statistic","통계치","통계, 수치"],
+["immigrate","이민 오다","이민 오다"],["orphan","고아","고아"],["race","경주하다","경주 / 인종"],["fund","기금","기금, 자금"],["foreign","외국의","외국의"],
+["increase","증가","늘리다, 증가"],["aid","돕다","돕다 / 원조"],["native","출생지의","태어난 곳의, 토박이의"],["support","후원하다","지지하다, 도와주다"],["hunger","배고픔","굶주림, 배고픔"],
+["community","공동체","공동체, 지역 사회"],["region","지역","지역, 지방"],["urban","도시의","도시의"],["population","인구","인구"],["border","국경","국경, 경계"],
+["global","지구의","세계적인, 지구의"],["different","다른","다른"],["rescue","구조","구조하다, 구하다"],["suffer","고통을 겪다","고통받다, 시달리다"],["decrease","감소","줄다, 감소"]
+]}
+};
+
+
+/* =====================================================================
+   STATE + STORAGE
+   ===================================================================== */
+const KEY='wm-progress-v1';
+// wrongPool[eng] = { kor, hint, correct }
+//   correct = 복습에서 연속으로 맞힌 횟수. 2회가 되면 목록에서 자동 제거.
+let store={ mastered:{}, wrongPool:{} };
+
+// Saves to the device via localStorage (works when the file is opened in Safari /
+// added to the Home Screen). Falls back to window.storage if present.
+async function load(){
+  let raw=null;
+  try{ raw=localStorage.getItem(KEY); }catch(e){}
+  if(!raw){ try{const r=await window.storage.get(KEY);if(r&&r.value)raw=r.value;}catch(e){} }
+  if(raw){ try{store=JSON.parse(raw);}catch(e){} }
+  if(!store.mastered)store.mastered={};
+  if(!store.wrongPool)store.wrongPool={};
+  // 예전 형식({eng:"뜻"}) → 새 형식({eng:{kor,hint,correct}}) 자동 변환
+  for(const eng in store.wrongPool){
+    const v=store.wrongPool[eng];
+    if(typeof v==='string'){ store.wrongPool[eng]={kor:v,hint:findHint(eng),correct:0}; }
+    else if(v && typeof v.correct!=='number'){ v.correct=0; }
+  }
+}
+// 단어의 힌트를 전체 DAYS에서 찾아 준다 (복습 카드에도 힌트를 쓰기 위해)
+function findHint(eng){
+  for(const day in DAYS){
+    for(const w of DAYS[day].words){ if(w[0]===eng) return w[2]||''; }
+  }
+  return '';
+}
+async function save(){
+  const data=JSON.stringify(store);
+  try{ localStorage.setItem(KEY,data); }catch(e){}
+  try{ if(window.storage&&window.storage.set) await window.storage.set(KEY,data,false); }catch(e){}
+}
+
+let mode='ek';           // ek | ke | type
+let session=null;        // current quiz session
+
+/* =====================================================================
+   HOME RENDER
+   ===================================================================== */
+const $=id=>document.getElementById(id);
+
+function masteredCount(day){
+  const m=store.mastered[day]||{};
+  return DAYS[day].words.filter(w=>m[w[0]]).length;
+}
+function renderChips(){
+  const box=$('chips');box.innerHTML='';
+  Object.keys(DAYS).forEach(day=>{
+    const d=DAYS[day];const total=d.words.length;const got=masteredCount(day);
+    const pct=Math.round(got/total*100);
+    const el=document.createElement('button');
+    el.className='chip'+(got===total?' done':'');
+    el.innerHTML=`<span class="badge">✅</span>
+      <div class="d">${day}일</div>
+      <div class="t">${d.title}</div>
+      <div class="bar"><i style="width:${pct}%"></i></div>`;
+    el.onclick=()=>startQuiz(day);
+    box.appendChild(el);
+  });
+  // 틀린 단어 집중 학습 카드 (최상단)
+  const wrongN=Object.keys(store.wrongPool).length;
+  const rt=$('reviewTop');
+  if(wrongN>0){
+    rt.classList.remove('hidden');
+    $('reviewCount').textContent=`${wrongN}개`;
+  }else{
+    rt.classList.add('hidden');
+  }
+  // note
+  const totalWords=Object.values(DAYS).reduce((a,d)=>a+d.words.length,0);
+  const totalGot=Object.keys(DAYS).reduce((a,day)=>a+masteredCount(day),0);
+  $('homeNote').innerHTML=`지금까지 <b>${totalGot}</b> / ${totalWords} 단어를 익혔어요`;
+  // hero progress: how many of 40 days are complete
+  const doneDays=Object.keys(DAYS).filter(day=>masteredCount(day)===DAYS[day].words.length).length;
+  const pct=Math.round(totalGot/totalWords*100);
+  $('heroFill').style.width=pct+'%';
+  $('heroCount').textContent=`40일 중 ${doneDays}일 완성 · 전체 ${pct}%`;
+}
+
+// segmented mode
+$('modeSeg').querySelectorAll('button').forEach(b=>{
+  b.onclick=()=>{
+    $('modeSeg').querySelectorAll('button').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');mode=b.dataset.mode;
+  };
+});
+$('reviewBtn').onclick=()=>startReview();
+
+/* =====================================================================
+   QUIZ ENGINE
+   ===================================================================== */
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function startQuiz(day){
+  const words=DAYS[day].words;
+  const m=store.mastered[day]||{};
+  // learning order: unmastered first, then a few mastered for review
+  const unmastered=words.filter(w=>!m[w[0]]);
+  const masteredW=words.filter(w=>m[w[0]]);
+  let queue=shuffle(unmastered);
+  // sprinkle in up to 5 mastered words to keep them fresh
+  queue=queue.concat(shuffle(masteredW).slice(0,5));
+  if(queue.length===0)queue=shuffle(words); // all mastered -> full review
+  beginSession({day,label:`${day}일 · ${DAYS[day].title}`,words,queue});
+}
+function startReview(){
+  const entries=Object.entries(store.wrongPool).map(([e,v])=>[e,v.kor,v.hint||'']);
+  if(!entries.length)return;
+  beginSession({day:null,label:`틀린 단어 복습`,words:entries,queue:shuffle(entries),review:true});
+}
+function beginSession(cfg){
+  session={
+    ...cfg,
+    idx:0,total:cfg.queue.length,
+    correct:0,wrong:0,streak:0,
+    wrongItems:[],            // [eng,kor]
+    answered:false
+  };
+  show('quiz');
+  renderQuestion();
+}
+
+function distractors(correctKor, pool){
+  const opts=new Set([correctKor]);
+  const all=shuffle(pool);
+  for(const w of all){if(opts.size>=4)break;opts.add(w[1]);}
+  // if not enough, borrow from all DAYS
+  if(opts.size<4){
+    const everything=shuffle(Object.values(DAYS).flatMap(d=>d.words));
+    for(const w of everything){if(opts.size>=4)break;opts.add(w[1]);}
+  }
+  return shuffle([...opts]);
+}
+function engDistractors(correctEng, pool){
+  const opts=new Set([correctEng]);
+  const all=shuffle(pool);
+  for(const w of all){if(opts.size>=4)break;opts.add(w[0]);}
+  if(opts.size<4){
+    const everything=shuffle(Object.values(DAYS).flatMap(d=>d.words));
+    for(const w of everything){if(opts.size>=4)break;opts.add(w[0]);}
+  }
+  return shuffle([...opts]);
+}
+
+function renderQuestion(){
+  const s=session;s.answered=false;
+  if(s.autoTimer){clearTimeout(s.autoTimer);s.autoTimer=null;}
+  const [eng,kor,hint]=s.queue[s.idx];
+  s.current={eng,kor,hint};
+  // top
+  $('progFill').style.width=(s.idx/s.total*100)+'%';
+  $('qCount').textContent=`${s.idx+1}/${s.total}`;
+  $('qTag').textContent=s.label;
+  $('qStreak').textContent=s.streak>=2?`🔥 연속 ${s.streak}`:'';
+  $('feedback').textContent='';$('feedback').className='feedback';
+  $('nextBtn').style.display='none';
+  // hint under the meaning (only shown on modes where the Korean meaning is the prompt,
+  // i.e. 뜻→영어 and 직접 쓰기, so it helps without giving the English away)
+  $('promptHint').textContent = (mode!=='ek' && hint) ? '💡 '+hint : '';
+
+  const optBox=$('options'),typeWrap=$('typeWrap');
+  const pool = s.review ? Object.entries(store.wrongPool).map(([e,v])=>[e,v.kor]) : DAYS[s.day].words;
+
+  if(mode==='type'){
+    optBox.classList.add('hidden');typeWrap.classList.remove('hidden');
+    $('promptLabel').textContent='이 뜻을 영어로';
+    $('prompt').textContent=kor;$('prompt').className='prompt'+(kor.length>10?' small':'');
+    $('speakBtn').classList.add('hidden');
+    const inp=$('typeInput');inp.value='';inp.className='';inp.disabled=false;
+    $('answerLine').textContent='';
+    setTimeout(()=>inp.focus(),150);
+  }else{
+    typeWrap.classList.add('hidden');optBox.classList.remove('hidden');optBox.innerHTML='';
+    let promptText,label,answers,correctVal;
+    if(mode==='ek'){
+      promptText=eng;label='영어 단어';answers=distractors(kor,pool);correctVal=kor;
+      $('speakBtn').classList.remove('hidden');
+    }else{
+      promptText=kor;label='이 뜻의 단어는?';answers=engDistractors(eng,pool);correctVal=eng;
+      $('speakBtn').classList.add('hidden');
+    }
+    $('promptLabel').textContent=label;
+    $('prompt').textContent=promptText;
+    $('prompt').className='prompt'+((mode==='ke'&&promptText.length>10)?' small':'');
+    answers.forEach((ans,i)=>{
+      const b=document.createElement('button');b.className='opt';
+      b.innerHTML=`<span class="num">${i+1}</span><span>${ans}</span>`;
+      b.onclick=()=>pick(b,ans===correctVal);
+      optBox.appendChild(b);
+    });
+  }
+}
+
+function speak(){
+  try{const u=new SpeechSynthesisUtterance(session.current.eng);u.lang='en-US';u.rate=.85;
+    speechSynthesis.cancel();speechSynthesis.speak(u);}catch(e){}
+}
+$('speakBtn').onclick=speak;
+
+function pick(btn,isCorrect){
+  if(session.answered)return;session.answered=true;
+  const s=session;
+  document.querySelectorAll('.opt').forEach(o=>o.classList.add('disabled'));
+  // reveal correct
+  const correctVal = mode==='ke'?s.current.eng:s.current.kor;
+  document.querySelectorAll('.opt').forEach(o=>{
+    const txt=o.querySelector('span:last-child').textContent;
+    if(txt===correctVal)o.classList.add('correct');
+  });
+  if(isCorrect){btn.classList.add('correct');}else{btn.classList.add('wrong');}
+  finalizeAnswer(isCorrect);
+}
+
+function checkTyping(){
+  if(session.answered)return;
+  const s=session;const inp=$('typeInput');
+  const guess=inp.value.trim().toLowerCase();
+  if(!guess)return;
+  session.answered=true;inp.disabled=true;
+  const correct=s.current.eng.toLowerCase();
+  const isCorrect=guess===correct;
+  inp.classList.add(isCorrect?'correct':'wrong');
+  $('answerLine').innerHTML=isCorrect?'':`정답: <span class="a">${s.current.eng}</span>`;
+  finalizeAnswer(isCorrect);
+}
+
+function finalizeAnswer(isCorrect){
+  const s=session,eng=s.current.eng,kor=s.current.kor,hint=s.current.hint||findHint(eng);
+  const fb=$('feedback');
+  if(isCorrect){
+    s.correct++;s.streak++;
+    fb.textContent=['정답! 👍','좋아요! ✨','완벽해요! 🌟','맞았어요! 🎯'][Math.random()*4|0];
+    fb.className='feedback good';
+    // 챕터 학습에서 맞히면 mastered 표시
+    if(s.day!=null){if(!store.mastered[s.day])store.mastered[s.day]={};store.mastered[s.day][eng]=true;}
+    // 틀린 단어 목록에 있으면 정답 횟수를 올리고, 2번 맞히면 목록에서 제거
+    if(store.wrongPool[eng]){
+      store.wrongPool[eng].correct=(store.wrongPool[eng].correct||0)+1;
+      if(store.wrongPool[eng].correct>=2){
+        delete store.wrongPool[eng];
+        fb.textContent='2번 연속 정답! 목록에서 빼줄게 ✅';
+      }else{
+        fb.textContent='한 번 더 맞히면 통과! (1/2) 💪';
+      }
+    }
+  }else{
+    s.wrong++;s.streak=0;
+    fb.textContent=`아쉬워요! "${eng}" = ${kor}`;
+    fb.className='feedback bad';
+    s.wrongItems.push([eng,kor,hint]);
+    // 틀린 단어 목록에 추가(또는 정답 횟수 0으로 리셋 → 다시 2번 맞혀야 함)
+    store.wrongPool[eng]={kor,hint,correct:0};
+    // un-master so it comes back
+    if(s.day!=null&&store.mastered[s.day])delete store.mastered[s.day][eng];
+  }
+  save();
+
+  if(isCorrect){
+    // 정답이면 잠깐 보여준 뒤 자동으로 다음 문제로
+    $('nextBtn').style.display='none';
+    session.autoTimer=setTimeout(()=>{ session.autoTimer=null; goNext(); }, 700);
+  }else{
+    // 틀리면 정답을 확인하도록 버튼으로 넘어가기
+    $('nextBtn').style.display='block';
+    $('nextBtn').textContent = (s.idx+1>=s.total)?'결과 보기 →':'다음 →';
+  }
+}
+
+function goNext(){
+  const s=session;
+  if(s.autoTimer){clearTimeout(s.autoTimer);s.autoTimer=null;}
+  s.idx++;
+  if(s.idx>=s.total){showResult();}else{renderQuestion();}
+}
+
+$('nextBtn').onclick=goNext;
+$('typeInput')&&$('typeInput').addEventListener('keydown',e=>{
+  if(e.key==='Enter'){if(session.answered){goNext();}else{checkTyping();}}
+});
+document.addEventListener('keydown',e=>{
+  if($('quiz').style.display==='flex'&&mode!=='type'&&!session?.answered){
+    if(['1','2','3','4'].includes(e.key)){
+      const opt=document.querySelectorAll('.opt')[+e.key-1];if(opt)opt.click();
+    }
+  }
+  if(e.key==='Enter'&&session?.answered){goNext();}
+});
+
+$('backBtn').onclick=()=>{
+  if(session&&session.autoTimer){clearTimeout(session.autoTimer);session.autoTimer=null;}
+  if(confirm('그만두고 챕터 선택으로 갈까요?')){show('home');renderChips();}
+};
+
+/* =====================================================================
+   RESULT
+   ===================================================================== */
+function showResult(){
+  const s=session;show('result');
+  $('progFill').style.width='100%';
+  const rate=Math.round(s.correct/s.total*100);
+  $('rCorrect').textContent=s.correct;
+  $('rWrong').textContent=s.wrong;
+  $('rRate').textContent=rate+'%';
+  let medal,title,line;
+  if(rate===100){medal='🏆';title='유노 완벽해!';line='한 개도 안 틀렸어. 최고야!';}
+  else if(rate>=80){medal='🎉';title='유노 아주 잘했어!';line='조금만 더 하면 완벽해.';}
+  else if(rate>=50){medal='💪';title='유노 잘하고 있어!';line='틀린 단어만 다시 풀어보자.';}
+  else{medal='🌱';title='좋은 시작이야!';line='반복하면 금방 외워져. 파이팅!';}
+  $('medal').textContent=medal;$('resTitle').textContent=title;$('resLine').textContent=line;
+
+  const wl=$('wrongList');
+  if(s.wrongItems.length){
+    wl.innerHTML='<div class="wtitle">📌 다시 볼 단어</div>'+
+      s.wrongItems.map(([e,k])=>`<div class="wrow"><span class="e">${e}</span><span class="k">${k}</span></div>`).join('');
+    $('retryWrong').classList.remove('hidden');
+  }else{
+    wl.innerHTML='';$('retryWrong').classList.add('hidden');
+  }
+  renderChips();
+}
+$('retryWrong').onclick=()=>{
+  const items=session.wrongItems.slice();
+  beginSession({day:session.day,label:session.label+' · 다시',words:session.words,queue:shuffle(items),review:session.review});
+};
+$('againBtn').onclick=()=>{ if(session.day!=null)startQuiz(session.day);else startReview(); };
+$('homeBtn').onclick=()=>{show('home');renderChips();};
+
+/* =====================================================================
+   NAV
+   ===================================================================== */
+function show(name){
+  $('home').style.display = name==='home'?'block':'none';
+  $('quiz').style.display = name==='quiz'?'flex':'none';
+  $('result').style.display = name==='result'?'block':'none';
+  window.scrollTo(0,0);
+}
+
+/* =====================================================================
+   BACKUP / RESTORE / RESET
+   ===================================================================== */
+$('exportBtn').onclick=()=>{
+  const data=JSON.stringify(store);
+  const blob=new Blob([data],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  const d=new Date();const stamp=`${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+  a.href=url;a.download=`워마단어_진행상황_${stamp}.json`;
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+};
+$('importBtn').onclick=()=>$('importFile').click();
+$('importFile').onchange=e=>{
+  const f=e.target.files[0];if(!f)return;
+  const rd=new FileReader();
+  rd.onload=()=>{
+    try{
+      const obj=JSON.parse(rd.result);
+      if(obj&&(obj.mastered||obj.wrongPool)){
+        store={mastered:obj.mastered||{},wrongPool:obj.wrongPool||{}};
+        // 불러온 데이터도 새 형식으로 맞춰줌
+        for(const eng in store.wrongPool){
+          const v=store.wrongPool[eng];
+          if(typeof v==='string') store.wrongPool[eng]={kor:v,hint:findHint(eng),correct:0};
+          else if(v&&typeof v.correct!=='number') v.correct=0;
+        }
+        save();renderChips();
+        alert('진행상황을 불러왔어요! ✅');
+      }else alert('올바른 백업 파일이 아니에요.');
+    }catch(err){alert('파일을 읽을 수 없어요.');}
+    $('importFile').value='';
+  };
+  rd.readAsText(f);
+};
+$('resetBtn').onclick=()=>{
+  if(confirm('모든 학습 기록을 지울까요?\n(아는 단어·틀린 단어가 모두 초기화됩니다)')){
+    store={mastered:{},wrongPool:{}};save();renderChips();
+    alert('기록을 초기화했어요.');
+  }
+};
+
+/* boot */
+(async function(){ await load(); renderChips(); })();
+</script>
+</body>
+</html>
