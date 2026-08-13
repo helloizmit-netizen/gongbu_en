@@ -168,6 +168,14 @@
   .posbadge:empty{display:none}
   .prompt.small{font-size:26px}
   .ratebtn{margin-left:8px;font-size:14px;opacity:.85}
+  .reward{margin:18px 0 6px;padding:16px;border-radius:18px;
+    background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12)}
+  .reward-cap{font-family:'Jua',sans-serif;font-size:15px;color:#ffd66b;margin-bottom:12px}
+  .reward img{width:100%;max-width:260px;aspect-ratio:3/4;object-fit:cover;
+    border-radius:14px;display:block;margin:0 auto;background:rgba(255,255,255,.06)}
+  .reward-name{font-family:'Jua',sans-serif;font-size:20px;margin-top:12px}
+  .reward-msg{font-size:15px;color:#cfe0ec;margin-top:6px;line-height:1.55;word-break:keep-all}
+  .rewardMore{margin-top:12px;font-size:14px;padding:9px 14px}
   .pron{margin-top:10px;font-family:'Gowun Dodum',sans-serif;font-size:15px;
         color:#8fa6b8;letter-spacing:.5px}
   .pron b{font-weight:normal;color:#c9d8e4}
@@ -334,6 +342,14 @@
       <div class="b g"><div class="n" id="rCorrect">0</div><div class="k">맞은 단어</div></div>
       <div class="b r"><div class="n" id="rWrong">0</div><div class="k">틀린 단어</div></div>
       <div class="b"><div class="n" id="rRate">0%</div><div class="k">정답률</div></div>
+    </div>
+
+    <div class="reward hidden" id="rewardBox">
+      <div class="reward-cap" id="rewardCap"></div>
+      <img id="rewardImg" alt="" />
+      <div class="reward-name" id="rewardName"></div>
+      <div class="reward-msg" id="rewardMsg"></div>
+      <button class="ghost rewardMore" id="rewardMore">다른 사진 보기 🔀</button>
     </div>
 
     <div class="wronglist" id="wrongList"></div>
@@ -834,6 +850,33 @@ function findPron(eng){return PRON[eng]||'';}
 
 
 /* =====================================================================
+   REWARD — 정답률에 따른 보상 사진
+   members.json 을 읽어 온다. 실패해도 학습 기능에는 영향이 없다.
+   ===================================================================== */
+const REWARD_DIR='img/';
+const REWARD_JSON='members.json';
+/* 등급: 조건을 만족하는 것 중 min 이 가장 높은 등급이 뽑힌다 */
+const REWARD_TIERS=[
+  {min:100, keys:['shinyu','dohoon','youngjae','hanjin','jihoon','kyungmin'], cap:'🏆 100점! 오늘의 선물'},
+  {min:85,  keys:['rescene'], cap:'✨ 85점 돌파! 오늘의 선물'}
+];
+let MEMBERS=[];
+async function loadMembers(){
+  try{
+    const res=await fetch(REWARD_JSON,{cache:'no-cache'});
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    const obj=await res.json();
+    if(!obj||!Array.isArray(obj.members))throw new Error('members 배열이 없습니다');
+    MEMBERS=obj.members.filter(m=>m&&m.key&&m.name&&Array.isArray(m.photos)&&m.photos.length);
+    console.log('[보상] 멤버',MEMBERS.length,'명 로드됨');
+  }catch(e){
+    MEMBERS=[];
+    console.warn('[보상] members.json 을 읽지 못해 보상 사진을 건너뜁니다:',e.message);
+  }
+}
+
+
+/* =====================================================================
    STATE + STORAGE
    ===================================================================== */
 const KEY='wm-progress-v1';
@@ -1115,6 +1158,41 @@ const RATE_LABEL=['🐢 아주 느리게','🚶 느리게','🏃 보통'];
 let rateIdx = 1;
 try{const r=localStorage.getItem('wm-rate'); if(r!==null)rateIdx=Math.min(2,Math.max(0,+r));}catch(e){}
 
+/* 정답률에 맞는 등급의 사진 중 무작위 1장.
+   파일이 없거나 로딩에 실패하면 보상 영역만 조용히 숨긴다. */
+let lastRewardPhoto='';
+let lastRewardRate=0;
+function rewardPool(rate){
+  const tier=REWARD_TIERS.filter(t=>rate>=t.min).sort((a,b)=>b.min-a.min)[0];
+  if(!tier)return {pool:[],cap:''};
+  const pool=[];
+  for(const m of MEMBERS){
+    if(!tier.keys.includes(m.key))continue;
+    for(const ph of m.photos)pool.push({m,ph});
+  }
+  return {pool,cap:tier.cap};
+}
+function showReward(rate){
+  if(typeof rate==='number')lastRewardRate=rate;
+  const box=$('rewardBox');
+  const {pool,cap}=rewardPool(lastRewardRate);
+  if(!pool.length){ box.classList.add('hidden'); return; }
+  let pick=pool[Math.random()*pool.length|0];
+  if(pool.length>1){let g=0;while(pick.ph===lastRewardPhoto&&g++<10)pick=pool[Math.random()*pool.length|0];}
+  lastRewardPhoto=pick.ph;
+
+  const img=$('rewardImg');
+  img.onerror=()=>{box.classList.add('hidden');};
+  img.onload =()=>{box.classList.remove('hidden');};
+  $('rewardCap').textContent=cap;
+  $('rewardName').textContent=pick.m.name||'';
+  $('rewardMsg').textContent=pick.m.message||'';
+  img.alt=(pick.m.name||'')+' 사진';
+  box.classList.add('hidden');
+  img.src=REWARD_DIR+pick.ph;
+  $('rewardMore').style.display = pool.length>1 ? '' : 'none';
+}
+
 function speak(){
   try{
     const u=new SpeechSynthesisUtterance(session.current.eng);
@@ -1131,6 +1209,7 @@ function cycleRate(){
 }
 $('speakBtn').onclick=speak;
 $('rateBtn').onclick=cycleRate;
+$('rewardMore').onclick=()=>showReward();
 $('rateBtn').textContent=RATE_LABEL[rateIdx];
 
 function pick(btn,isCorrect){
@@ -1238,11 +1317,14 @@ function showResult(){
   $('rWrong').textContent=s.wrong;
   $('rRate').textContent=rate+'%';
   let medal,title,line;
-  if(rate===100){medal='🏆';title='유노 완벽해!';line='한 개도 안 틀렸어. 최고야!';}
+  if(rate===100){medal='🏆';title='유노야!! 100점 축하해!! 💖';line='한 개도 안 틀렸어. 진짜 최고야! 사랑해!';}
   else if(rate>=80){medal='🎉';title='유노 아주 잘했어!';line='조금만 더 하면 완벽해.';}
   else if(rate>=50){medal='💪';title='유노 잘하고 있어!';line='틀린 단어만 다시 풀어보자.';}
   else{medal='🌱';title='좋은 시작이야!';line='반복하면 금방 외워져. 파이팅!';}
   $('medal').textContent=medal;$('resTitle').textContent=title;$('resLine').textContent=line;
+
+  // 만점이면 보상 사진
+  if(s.total>0){ showReward(rate); } else { $('rewardBox').classList.add('hidden'); }
 
   const wl=$('wrongList');
   if(s.wrongItems.length){
@@ -1315,7 +1397,7 @@ $('resetBtn').onclick=()=>{
 };
 
 /* boot */
-(async function(){ await load(); renderChips(); })();
+(async function(){ await load(); renderChips(); loadMembers(); })();
 </script>
 </body>
 </html>
