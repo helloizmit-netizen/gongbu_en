@@ -372,6 +372,7 @@
       <input id="typeInput" type="text" autocomplete="off" autocapitalize="off"
              autocorrect="off" spellcheck="false" placeholder="영어로 입력">
       <div class="answerline" id="answerLine"></div>
+      <button class="speak hidden" id="glossBtn">💡 뜻 힌트 보기</button>
       <div class="syncard hidden" id="synCard"></div>
     </div>
 
@@ -1068,56 +1069,56 @@ function beginSession(cfg){
 const SYNONYM_GROUPS=[
   {w:["auditorium","hall"],t:"강당",n:"hall은 넓은 실내 공간 전반, auditorium은 좌석이 있고 공연·강연을 보는 곳.",p:{"hall":"복도·현관·큰 방까지 폭넓게","auditorium":"객석이 있는 공연장·강당"}},
   {w:["cash register","cashier","counter"],t:"계산대",n:"cash register는 돈 넣는 기계, counter는 계산하는 탁자, cashier는 계산하는 사람.",p:{"cash register":"금전 등록기(기계)","counter":"계산대(탁자)","cashier":"계산원(사람)"}},
-  {w:["avenue","road","route","street"],t:"길",n:"street은 건물 사이 시내 도로, avenue는 넓은 큰길, road는 지역을 잇는 길, route는 가는 경로.",p:{"street":"시내 도로, 상점가","avenue":"가로수 있는 넓은 대로","road":"도시와 도시를 잇는 길","route":"출발→도착 경로"}},
+  {w:["avenue","road","route","street"],t:"길·도로",n:"street은 건물 사이 시내 도로, avenue는 넓은 큰길, road는 지역을 잇는 길, route는 가는 경로.",p:{"street":"시내 도로, 상점가","avenue":"가로수 있는 넓은 대로","road":"도시와 도시를 잇는 길","route":"출발→도착 경로"}},
   {w:["cooler","freezer","refrigerator"],t:"냉장 기기",n:"refrigerator는 냉장고 전체, freezer는 얼리는 칸, cooler는 들고 다니는 아이스박스.",p:{"refrigerator":"집에 있는 냉장고","freezer":"냉동실","cooler":"휴대용 아이스박스"}},
   {w:["frightened","surprised"],t:"놀란",n:"surprised는 예상 못 해 놀란 것(좋을 수도), frightened는 무서워서 놀란 것.",p:{"surprised":"깜짝! (중립·긍정 가능)","frightened":"겁먹은 (무서움)"}},
   {w:["blizzard","gale","snowstorm","storm"],t:"폭풍우",n:"storm이 가장 넓은 말, gale은 강한 바람, blizzard와 snowstorm은 눈보라.",p:{"storm":"폭풍 전반","gale":"강풍(비·눈 없이도)","blizzard":"눈+강풍, 앞이 안 보임","snowstorm":"눈이 많이 오는 폭풍"}},
   {w:["mop","wash","wipe"],t:"닦다·씻다",n:"wash는 물로 씻는 것, wipe는 천으로 문질러 닦는 것, mop는 자루걸레로 바닥을 닦는 것.",p:{"wash":"물로 씻다","wipe":"천으로 훔치다","mop":"대걸레로 바닥을"}},
   {w:["arrive","reach"],t:"도착하다",n:"둘 다 도착. arrive는 뒤에 at/in이 붙고, reach는 목적어가 바로 온다.",p:{"arrive":"arrive at the station","reach":"reach the station (전치사 없음)"}},
   {w:["attractive","charming"],t:"매력적인",n:"attractive는 외모·물건에 두루, charming은 태도와 분위기가 사람을 끄는 것.",p:{"attractive":"보기에 끌리는","charming":"매너·분위기가 사랑스러운"}},
-  {w:["collect","gather","get together"],t:"모으다",n:"collect는 목적을 갖고 수집, gather는 흩어진 것을 그러모으다, get together는 사람이 모이다.",p:{"collect":"우표를 수집하다","gather":"낙엽을 그러모으다","get together":"사람들이 모이다"}},
+  {w:["collect","gather","get together"],t:"모으다·모이다",n:"collect는 목적을 갖고 수집, gather는 흩어진 것을 그러모으다, get together는 사람이 모이다.",p:{"collect":"우표를 수집하다","gather":"낙엽을 그러모으다","get together":"사람들이 모이다"}},
   {w:["meadow","pasture","ranch"],t:"목초지·목장",n:"meadow는 풀밭 그 자체, pasture는 가축이 풀 뜯는 땅, ranch는 가축을 키우는 큰 농장.",p:{"meadow":"들꽃 핀 풀밭","pasture":"방목지","ranch":"목축 경영 농장"}},
   {w:["jeans","pants"],t:"바지",n:"pants가 바지 전체를 가리키는 말, jeans는 그중 청바지.",p:{"pants":"바지 전반","jeans":"데님(청)바지"}},
   {w:["bottle","disease"],x:1,t:"⚠ 한글이 같지만 전혀 다른 단어",n:"우리말로 둘 다 '병'이지만 뜻이 완전히 다르다. 절대 헷갈리지 말 것.",p:{"bottle":"물병, 유리병 (사물)","disease":"질병 (아픈 것)"}},
   {w:["choose","select"],t:"선택하다",n:"choose가 일상적인 말, select는 여럿을 따져 신중히 골라내는 느낌.",p:{"choose":"고르다 (일반)","select":"엄선하다 (격식)"}},
   {w:["consumer","customer"],t:"소비자·손님",n:"customer는 그 가게에서 사는 손님, consumer는 물건을 쓰는 사람 전체.",p:{"customer":"가게 손님","consumer":"소비자 일반(경제 용어)"}},
   {w:["bin","garbage","trash"],t:"쓰레기·쓰레기통",n:"garbage는 주로 음식물 쓰레기, trash는 종이 같은 마른 쓰레기, bin은 그것을 담는 통.",p:{"garbage":"음식물 쓰레기","trash":"마른 쓰레기","bin":"쓰레기통 (담는 그릇)"}},
-  {w:["ache","pain","sore"],t:"아픔",n:"ache는 은근히 계속되는 통증, pain은 통증 전반(날카로운 것 포함), sore는 '아픈'이라는 형용사.",p:{"ache":"두통·치통처럼 쑤심","pain":"아픔 전반(명사)","sore":"아픈 (형용사)"}},
-  {w:["skinny","slim","thin"],t:"마른",n:"thin은 중립, slim은 보기 좋게 날씬한 칭찬, skinny는 앙상하게 말라 보기 안 좋은 느낌.",p:{"thin":"마른 (중립)","slim":"날씬한 (칭찬)","skinny":"삐쩍 마른 (부정적)"}},
-  {w:["journey","sightseeing","trip"],t:"여행",n:"trip은 짧은 여행, journey는 길고 긴 여정, sightseeing은 명소를 구경하는 관광.",p:{"trip":"짧은 여행·출장","journey":"긴 여정","sightseeing":"관광(구경)"}},
+  {w:["ache","pain","sore"],t:"아픔·아픈",n:"ache는 은근히 계속되는 통증, pain은 통증 전반(날카로운 것 포함), sore는 '아픈'이라는 형용사.",p:{"ache":"두통·치통처럼 쑤심","pain":"아픔 전반(명사)","sore":"아픈 (형용사)"}},
+  {w:["skinny","slim","thin"],t:"마른·날씬한",n:"thin은 중립, slim은 보기 좋게 날씬한 칭찬, skinny는 앙상하게 말라 보기 안 좋은 느낌.",p:{"thin":"마른 (중립)","slim":"날씬한 (칭찬)","skinny":"삐쩍 마른 (부정적)"}},
+  {w:["journey","sightseeing","trip"],t:"여행·관광",n:"trip은 짧은 여행, journey는 길고 긴 여정, sightseeing은 명소를 구경하는 관광.",p:{"trip":"짧은 여행·출장","journey":"긴 여정","sightseeing":"관광(구경)"}},
   {w:["chef","cook"],t:"요리사",n:"cook은 요리하는 사람 일반, chef는 식당의 전문 주방장.",p:{"cook":"요리하는 사람 / 요리하다","chef":"전문 셰프, 주방장"}},
   {w:["athlete","player"],t:"운동선수",n:"athlete는 육상·체력 중심의 운동선수, player는 경기에 뛰는 선수.",p:{"athlete":"운동 능력이 뛰어난 사람","player":"경기 출전 선수"}},
   {w:["element","resource","source"],t:"원천·요소",n:"source는 나오는 출처, resource는 쓸 수 있는 자원, element는 구성하는 요소.",p:{"source":"출처, 근원","resource":"자원(활용 대상)","element":"구성 요소"}},
   {w:["poisonous","toxic"],t:"유독한",n:"poisonous는 먹거나 닿으면 해로운 것(주로 생물), toxic은 화학적으로 독성이 있는 것.",p:{"poisonous":"독버섯, 독사","toxic":"유독 가스·화학물질"}},
   {w:["material","stuff"],t:"재료·물건",n:"material은 무언가를 만드는 재료, stuff는 이름 붙이기 애매한 '것들'을 뭉뚱그린 말.",p:{"material":"소재, 원료","stuff":"물건, 잡동사니 (구어)"}},
-  {w:["amusement","joy","pleasure"],t:"즐거움",n:"joy가 가장 벅찬 기쁨, pleasure는 만족스러운 즐거움, amusement는 재미있어 웃게 되는 즐거움.",p:{"joy":"큰 기쁨, 환희","pleasure":"기쁨, 즐거움","amusement":"재미, 오락"}},
+  {w:["amusement","joy","pleasure"],t:"즐거움·기쁨",n:"joy가 가장 벅찬 기쁨, pleasure는 만족스러운 즐거움, amusement는 재미있어 웃게 되는 즐거움.",p:{"joy":"큰 기쁨, 환희","pleasure":"기쁨, 즐거움","amusement":"재미, 오락"}},
   {w:["purse","wallet"],t:"지갑",n:"wallet은 접는 납작한 지갑, purse는 (미국) 여성용 손가방.",p:{"wallet":"접이식 지갑","purse":"핸드백 (미국)"}},
   {w:["landscape","scenery"],t:"풍경",n:"landscape는 눈앞에 펼쳐진 땅의 경치, scenery는 아름다운 자연 경관 전체.",p:{"landscape":"경치, 풍경화","scenery":"자연 경관 (셀 수 없음)"}},
   {w:["barn","shed"],t:"헛간",n:"barn은 가축·건초를 두는 큰 농장 건물, shed는 도구를 넣는 작은 창고.",p:{"barn":"큰 축사·곳간","shed":"작은 헛간·창고"}},
-  {w:["annoyed","mad","upset"],t:"화난",n:"mad가 가장 세게 화난 것, annoyed는 짜증나는 정도, upset은 속상하고 마음이 상한 것.",p:{"mad":"몹시 화난","annoyed":"짜증난 (약함)","upset":"속상한, 마음 상한"}},
-  {w:["beautiful","cute","lovely","pretty"],t:"예쁜",n:"beautiful이 가장 격이 높고, pretty는 귀엽고 예쁜, cute는 작고 사랑스러운, lovely는 정감 있게 사랑스러운.",p:{"beautiful":"아름다운 (격식·강함)","pretty":"예쁜 (일상)","cute":"귀여운 (작고 앙증)","lovely":"사랑스러운 (정감)"}},
-  {w:["good looking","handsome"],t:"잘생긴",n:"handsome은 주로 남성에게, good looking은 남녀 모두에게 쓴다.",p:{"handsome":"남성에게 주로","good looking":"남녀 모두"}},
-  {w:["amused","delighted","enjoy","glad","pleased"],t:"기쁜",n:"glad는 잘돼서 다행인 기쁨, pleased는 만족스러운, delighted는 아주 크게 기쁜, amused는 재미있어 웃는, enjoy는 '즐기다' 동사.",p:{"glad":"다행이라 기쁜","pleased":"만족스러운","delighted":"아주 기쁜 (강함)","amused":"재미있어하는","enjoy":"즐기다 (동사)"}},
+  {w:["annoyed","mad","upset"],t:"화난·속상한",n:"mad가 가장 세게 화난 것, annoyed는 짜증나는 정도, upset은 속상하고 마음이 상한 것.",p:{"mad":"몹시 화난","annoyed":"짜증난 (약함)","upset":"속상한, 마음 상한"}},
+  {w:["beautiful","cute","lovely","pretty"],t:"예쁜·아름다운",n:"beautiful이 가장 격이 높고, pretty는 귀엽고 예쁜, cute는 작고 사랑스러운, lovely는 정감 있게 사랑스러운.",p:{"beautiful":"아름다운 (격식·강함)","pretty":"예쁜 (일상)","cute":"귀여운 (작고 앙증)","lovely":"사랑스러운 (정감)"}},
+  {w:["good looking","handsome"],t:"잘생긴·멋진",n:"handsome은 주로 남성에게, good looking은 남녀 모두에게 쓴다.",p:{"handsome":"남성에게 주로","good looking":"남녀 모두"}},
+  {w:["amused","delighted","enjoy","glad","pleased"],t:"기쁜·즐거운",n:"glad는 잘돼서 다행인 기쁨, pleased는 만족스러운, delighted는 아주 크게 기쁜, amused는 재미있어 웃는, enjoy는 '즐기다' 동사.",p:{"glad":"다행이라 기쁜","pleased":"만족스러운","delighted":"아주 기쁜 (강함)","amused":"재미있어하는","enjoy":"즐기다 (동사)"}},
   {w:["depressed","disappointed"],t:"실망·낙담",n:"disappointed는 기대에 못 미쳐 실망한 것, depressed는 기운이 가라앉아 우울한 상태.",p:{"disappointed":"실망한 (일시적)","depressed":"우울한 (지속·심함)"}},
   {w:["anxious","worried"],t:"anxious의 두 얼굴",n:"worried는 걱정하는 것. anxious는 '걱정되는'과 '몹시 하고 싶은' 두 뜻을 함께 가진다.",p:{"worried":"걱정하는","anxious":"걱정되는 / 열망하는 (둘 다!)"}},
-  {w:["cereal","flour","grain"],t:"곡물",n:"grain이 곡식 알갱이, cereal은 곡물(및 시리얼), flour는 그것을 빻은 가루.",p:{"grain":"곡식 알갱이","cereal":"곡물, 아침식사 시리얼","flour":"밀가루 (빻은 것)"}},
+  {w:["cereal","flour","grain"],t:"곡물·가루",n:"grain이 곡식 알갱이, cereal은 곡물(및 시리얼), flour는 그것을 빻은 가루.",p:{"grain":"곡식 알갱이","cereal":"곡물, 아침식사 시리얼","flour":"밀가루 (빻은 것)"}},
   {w:["diet","meal"],t:"식사·음식",n:"meal은 한 끼 식사, diet는 평소 먹는 식단(꼭 '살 빼기'만은 아님).",p:{"meal":"한 끼 (아침·점심·저녁)","diet":"식단, 평소 먹는 것"}},
   {w:["jar","kettle","pot"],t:"그릇·용기",n:"pot은 깊은 냄비·단지, kettle은 물 끓이는 주전자, jar는 뚜껑 있는 유리 항아리.",p:{"pot":"깊은 냄비, 화분","kettle":"주전자 (물 끓임)","jar":"잼병 같은 항아리"}},
   {w:["bowl","plate"],t:"접시·그릇",n:"plate는 납작한 접시, bowl은 움푹한 그릇.",p:{"plate":"납작한 접시","bowl":"국·시리얼용 움푹한 그릇"}},
   {w:["college","university"],t:"대학",n:"college는 단과대·전문대, university는 여러 단과대를 거느린 종합대학.",p:{"college":"단과 대학","university":"종합 대학"}},
-  {w:["classmate","schoolmate"],t:"학교 친구",n:"classmate는 같은 반 친구, schoolmate는 같은 학교 친구(반은 달라도 됨).",p:{"classmate":"같은 반","schoolmate":"같은 학교"}},
-  {w:["humid","moist"],t:"축축한",n:"moist는 알맞게 촉촉한(빵·케이크에 칭찬), humid는 공기가 눅눅한 것.",p:{"moist":"촉촉한 (좋은 뜻 가능)","humid":"습한 (날씨·공기)"}},
+  {w:["classmate","schoolmate"],t:"반 친구·학교 친구",n:"classmate는 같은 반 친구, schoolmate는 같은 학교 친구(반은 달라도 됨).",p:{"classmate":"같은 반","schoolmate":"같은 학교"}},
+  {w:["humid","moist"],t:"축축한·습한",n:"moist는 알맞게 촉촉한(빵·케이크에 칭찬), humid는 공기가 눅눅한 것.",p:{"moist":"촉촉한 (좋은 뜻 가능)","humid":"습한 (날씨·공기)"}},
   {w:["damage","destroy","ruin"],t:"망가뜨리다",n:"damage는 일부를 손상시키는 것, destroy는 완전히 부수는 것, ruin은 망쳐서 못 쓰게 만드는 것.",p:{"damage":"손상 (고칠 수 있음)","destroy":"완전 파괴","ruin":"망쳐 놓다 (계획·인생도)"}},
-  {w:["soul","spiritual"],t:"정신",n:"soul은 사람 안의 영혼(명사), spiritual은 '정신적인'이라는 형용사.",p:{"soul":"영혼 (명사)","spiritual":"정신적인 (형용사)"}},
-  {w:["belief","faithful"],t:"믿음",n:"belief는 믿는 마음(명사), faithful은 믿음직하고 충실한(형용사).",p:{"belief":"믿음, 신념 (명사)","faithful":"충실한 (형용사)"}},
-  {w:["bough","branch"],t:"나뭇가지",n:"branch가 일반적인 가지, bough는 나무에서 뻗은 굵고 큰 가지.",p:{"branch":"가지 (일반), 지점","bough":"큰 가지 (문어적)"}},
-  {w:["stem","trunk"],t:"줄기",n:"trunk는 나무의 굵은 몸통, stem은 풀·꽃의 가느다란 줄기.",p:{"trunk":"나무 몸통 (굵음)","stem":"꽃대, 풀줄기"}},
-  {w:["look","stare","watch"],t:"보다",n:"look은 의식해서 눈을 돌리는 것, watch는 움직이는 것을 지켜보는 것, stare는 빤히 오래 쳐다보는 것.",p:{"look":"시선을 향하다","watch":"움직이는 것을 지켜보다","stare":"빤히 응시하다 (무례할 수 있음)"}},
+  {w:["soul","spiritual"],t:"정신·영혼",n:"soul은 사람 안의 영혼(명사), spiritual은 '정신적인'이라는 형용사.",p:{"soul":"영혼 (명사)","spiritual":"정신적인 (형용사)"}},
+  {w:["belief","faithful"],t:"믿음·충실한",n:"belief는 믿는 마음(명사), faithful은 믿음직하고 충실한(형용사).",p:{"belief":"믿음, 신념 (명사)","faithful":"충실한 (형용사)"}},
+  {w:["bough","branch"],t:"나뭇가지·큰 가지",n:"branch가 일반적인 가지, bough는 나무에서 뻗은 굵고 큰 가지.",p:{"branch":"가지 (일반), 지점","bough":"큰 가지 (문어적)"}},
+  {w:["stem","trunk"],t:"줄기·몸통",n:"trunk는 나무의 굵은 몸통, stem은 풀·꽃의 가느다란 줄기.",p:{"trunk":"나무 몸통 (굵음)","stem":"꽃대, 풀줄기"}},
+  {w:["look","stare","watch"],t:"보다·쳐다보다",n:"look은 의식해서 눈을 돌리는 것, watch는 움직이는 것을 지켜보는 것, stare는 빤히 오래 쳐다보는 것.",p:{"look":"시선을 향하다","watch":"움직이는 것을 지켜보다","stare":"빤히 응시하다 (무례할 수 있음)"}},
   {w:["discover","find out","notice","observe"],t:"알아채다·발견하다",n:"notice는 문득 눈에 띄어 알아채는 것, observe는 관찰해서 알아내는 것, discover와 find out은 몰랐던 사실을 알아내는 것.",p:{"notice":"문득 알아차리다","observe":"주의 깊게 관찰하다","discover":"발견하다 (새로운 것)","find out":"알아내다 (조사해서)"}},
-  {w:["smooth","soft"],t:"부드러운",n:"smooth는 표면이 매끈한 것, soft는 눌렀을 때 말랑한 것.",p:{"smooth":"매끈매끈 (표면)","soft":"말랑말랑 (촉감·소리)"}},
-  {w:["transfer","transport"],t:"옮기다",n:"transport는 큰 규모로 실어 나르는 것, transfer는 다른 곳·다른 편으로 옮겨 타거나 넘기는 것.",p:{"transport":"화물·사람을 수송","transfer":"환승, 이체, 전학"}},
+  {w:["smooth","soft"],t:"부드러운·매끄러운",n:"smooth는 표면이 매끈한 것, soft는 눌렀을 때 말랑한 것.",p:{"smooth":"매끈매끈 (표면)","soft":"말랑말랑 (촉감·소리)"}},
+  {w:["transfer","transport"],t:"옮기다·나르다",n:"transport는 큰 규모로 실어 나르는 것, transfer는 다른 곳·다른 편으로 옮겨 타거나 넘기는 것.",p:{"transport":"화물·사람을 수송","transfer":"환승, 이체, 전학"}},
   {w:["bundle","pile"],t:"묶음·더미",n:"bundle은 끈으로 묶은 다발, pile은 위로 쌓아 올린 더미.",p:{"bundle":"묶은 다발","pile":"쌓아 올린 더미"}},
-  {w:["celebrate","congratulation"],t:"축하",n:"celebrate는 '축하하다' 동사, congratulation은 '축하'라는 명사(주로 복수형 인사말).",p:{"celebrate":"축하하다 (동사)","congratulation":"축하 (명사)"}},
+  {w:["celebrate","congratulation"],t:"축하·축하하다",n:"celebrate는 '축하하다' 동사, congratulation은 '축하'라는 명사(주로 복수형 인사말).",p:{"celebrate":"축하하다 (동사)","congratulation":"축하 (명사)"}},
   {w:["device","machine"],t:"기계·장치",n:"machine은 힘을 내어 일하는 기계, device는 특정 목적의 작은 장치.",p:{"machine":"큰 기계 (세탁기 등)","device":"작은 장치 (스마트기기)"}},
   {w:["generate","produce"],t:"만들어 내다",n:"produce는 물건을 생산하는 것, generate는 전기·에너지처럼 없던 것을 발생시키는 것.",p:{"produce":"생산하다 (제품·농산물)","generate":"발생시키다 (전기·수익)"}},
   {w:["accident","crash"],t:"사고",n:"accident는 뜻하지 않은 사고 전반, crash는 세게 부딪치는 충돌 사고.",p:{"accident":"사고 (넘어짐도 포함)","crash":"충돌 (차·비행기)"}},
@@ -1242,6 +1243,7 @@ function renderQuestion(){
   $('feedback').textContent='';$('feedback').className='feedback';
   $('nextBtn').style.display='none';
   $('synCard').classList.add('hidden');
+  $('glossBtn').classList.add('hidden');
   // hint under the meaning (only shown on modes where the Korean meaning is the prompt,
   // i.e. 뜻→영어 and 직접 쓰기, so it helps without giving the English away)
   $('promptHint').textContent = (mode!=='ek' && hint) ? '💡 '+hint : '';
@@ -1418,7 +1420,7 @@ function openSynStudy(){
 
 /* [기능1] 모두 고르기 퀴즈: 같은 뜻인 단어를 전부 고르기 */
 function startSynQuiz(){
-  const usable=SYNONYM_GROUPS.filter(g=>g.w.length>=2&&g.w.every(findWord));
+  const usable=SYNONYM_GROUPS.filter(g=>!g.x&&g.w.length>=2&&g.w.every(findWord));
   if(!usable.length){ alert('아직 준비된 묶음이 없어요.'); return; }
   session={ synMode:true, queue:shuffle(usable).slice(0,12), idx:0,
             total:Math.min(12,usable.length), correct:0, wrong:0, streak:0,
@@ -1436,7 +1438,9 @@ function renderSynQuestion(){
   $('qStreak').textContent=s.streak>=2?`🔥 연속 ${s.streak}`:'';
   $('feedback').textContent=''; $('feedback').className='feedback';
   $('answerLine').textContent=''; $('synCard').classList.add('hidden');
-  $('promptHint').textContent='💡 해당하는 것을 모두 고른 뒤 확인을 누르세요';
+  $('promptHint').textContent='뜻이 비슷한 단어를 모두 고른 뒤 확인을 누르세요 (표기가 달라도 뜻이 겹치면 정답)';
+  $('glossBtn').classList.remove('hidden');
+  $('glossBtn').textContent='💡 뜻 힌트 보기';
   $('pronLine').classList.add('hidden');
   $('speakBtn').classList.add('hidden'); $('rateBtn').classList.add('hidden');
   $('typeWrap').classList.add('hidden');
@@ -1461,7 +1465,7 @@ function renderSynQuestion(){
     const b=document.createElement('button'); b.className='opt'; b.dataset.val=e;
     const n=document.createElement('span'); n.className='num'; n.textContent=i+1;
     const t=document.createElement('span'); t.textContent=e;
-    const k=document.createElement('span'); k.className='posbadge sm';
+    const k=document.createElement('span'); k.className='posbadge sm optgloss hidden';
     const wd=findWord(e); k.textContent=wd?wd[1]:'';
     b.appendChild(n); b.appendChild(t); b.appendChild(k);
     b.onclick=()=>{
@@ -1487,6 +1491,8 @@ function checkSynAnswer(){
     if(did&&!should){o.classList.add('wrong');ok=false;}
     if(should&&!did)ok=false;
   });
+  document.querySelectorAll('.optgloss').forEach(x=>x.classList.remove('hidden'));
+  $('glossBtn').classList.add('hidden');
   const fb=$('feedback');
   if(ok){ s.correct++; s.streak++; fb.textContent='정확해요! 👍'; fb.className='feedback good'; }
   else  { s.wrong++; s.streak=0; fb.textContent='아쉬워요! 초록색이 모두 정답이에요.'; fb.className='feedback bad'; }
@@ -1680,6 +1686,11 @@ $('retryWrong').onclick=()=>{
 };
 $('againBtn').onclick=()=>{ if(session.day!=null)startQuiz(session.day);else startReview(); };
 $('homeBtn').onclick=()=>{show('home');renderChips();};
+$('glossBtn').onclick=()=>{
+  const hid=document.querySelector('.optgloss.hidden');
+  document.querySelectorAll('.optgloss').forEach(x=>x.classList.toggle('hidden',!hid));
+  $('glossBtn').textContent = hid ? '🙈 뜻 힌트 숨기기' : '💡 뜻 힌트 보기';
+};
 $('synStudyBtn').onclick=openSynStudy;
 $('synQuizBtn').onclick=startSynQuiz;
 $('synBackBtn').onclick=()=>{show('home');renderChips();};
