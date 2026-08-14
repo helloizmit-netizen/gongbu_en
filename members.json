@@ -1,56 +1,26 @@
 {
   "members": [
     {
-      "key": "shinyu",
-      "name": "신유",
+      "key": "tws",
+      "name": "투어스",
       "photos": [
-        "shinyu_01.webp",
-        "shinyu_02.webp"
-      ],
-      "message": "유노야!! 100점 축하해!! 사랑해 💖"
-    },
-    {
-      "key": "dohoon",
-      "name": "도훈",
-      "photos": [
-        "dohoon_01.webp",
-        "dohoon_02.webp"
-      ],
-      "message": "유노야!! 100점 축하해!! 사랑해 💖"
-    },
-    {
-      "key": "youngjae",
-      "name": "영재",
-      "photos": [
-        "youngjae_01.webp",
-        "youngjae_02.webp"
-      ],
-      "message": "유노야!! 100점 축하해!! 사랑해 💖"
-    },
-    {
-      "key": "hanjin",
-      "name": "한진",
-      "photos": [
-        "hanjin_01.webp",
-        "hanjin_02.webp"
-      ],
-      "message": "유노야!! 100점 축하해!! 사랑해 💖"
-    },
-    {
-      "key": "jihoon",
-      "name": "지훈",
-      "photos": [
-        "jihoon_01.webp",
-        "jihoon_02.webp"
-      ],
-      "message": "유노야!! 100점 축하해!! 사랑해 💖"
-    },
-    {
-      "key": "kyungmin",
-      "name": "경민",
-      "photos": [
-        "kyungmin_01.webp",
-        "kyungmin_02.webp"
+        "tws_01.webp",
+        "tws_02.webp",
+        "tws_03.webp",
+        "tws_04.webp",
+        "tws_05.webp",
+        "tws_06.webp",
+        "tws_07.webp",
+        "tws_08.webp",
+        "tws_09.webp",
+        "tws_10.webp",
+        "tws_11.webp",
+        "tws_12.webp",
+        "tws_13.webp",
+        "tws_14.webp",
+        "tws_15.webp",
+        "tws_16.webp",
+        "tws_17.webp"
       ],
       "message": "유노야!! 100점 축하해!! 사랑해 💖"
     },
